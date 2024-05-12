@@ -5,8 +5,6 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,7 +15,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class CreateRegisterRequest {
+    @NotNull(message = "firstname : must not be null")
+    @NotEmpty(message = "firstname : must not be empty")
+    @NotBlank(message = "firstname : must not be blank")
+    private String firstName;
 
+    @NotNull(message = "lastname : must not be null")
+    @NotEmpty(message = "lastname : must not be empty")
+    @NotBlank(message = "lastname : must not be blank")
+    private String lastName;
     @NotNull(message = "email : must not be null")
     @NotEmpty(message = "email : must not be empty")
     @NotBlank(message = "email : must not be blank")

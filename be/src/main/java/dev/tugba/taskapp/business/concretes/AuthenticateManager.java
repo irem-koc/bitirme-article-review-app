@@ -43,6 +43,8 @@ public class AuthenticateManager implements AuthenticationService {
         }
 
         User user = User.builder()
+                .firstName(createRegisterRequest.getFirstName())
+                .lastName(createRegisterRequest.getLastName())
                 .email(createRegisterRequest.getEmail())
                 .password(this.passwordEncoder.encode(createRegisterRequest.getPassword()))
                 .role(createRegisterRequest.getRole().toString() == "ADMIN" ? Role.ADMIN : Role.VISITOR)
