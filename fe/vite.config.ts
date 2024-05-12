@@ -8,6 +8,8 @@ export default defineConfig({
     alias: {
       "@": path.resolve(__dirname, "./src"),
       "@route": path.resolve(__dirname, "./src/route"),
+      "@types": path.resolve(__dirname, "./src/types"),
+      "@redux": path.resolve(__dirname, "./src/redux"),
       "@assets": path.resolve(__dirname, "./src/assets"),
       "@atoms": path.resolve(__dirname, "./src/components/atoms"),
       "@molecules": path.resolve(__dirname, "./src/components/molecules"),

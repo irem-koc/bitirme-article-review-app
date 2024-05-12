@@ -23,6 +23,8 @@
     "paths": {
       "@/.": ["src/*"],
       "@route/*": ["src/route/*"],
+      "@types/*": ["src/types/*"],
+      "@redux/*": ["src/redux/*"],
       "@assets/*": ["src/assets/*"],
       "@components/*": ["src/components/*"],
       "@atoms/*": ["src/components/atoms/*"],
