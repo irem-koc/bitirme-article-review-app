@@ -1,14 +1,15 @@
 import Button from "@atoms/Button/Button";
 import Label from "@atoms/Label/Label";
 import Text from "@atoms/Text/Text";
-import { useRegisterMutation } from "@redux/services/userApi";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Context } from "../../context/Context";
+import register from "../../services/register";
 
 type Props = {};
 
 const Signup = (props: Props) => {
-  const {} = props;
+  const { userr, setUserr } = useContext(Context);
   const locate = useLocation();
   const navigate = useNavigate();
   const [user, setUser] = useState({
@@ -17,12 +18,10 @@ const Signup = (props: Props) => {
     email: "",
     password: "",
   });
-  const [errorText, setErrorText] = useState();
-
-  const [register] = useRegisterMutation();
+  const [errorText, setErrorText] = useState<string | undefined>();
 
   const handleChange = (e) => {
-    setErrorText();
+    setErrorText(undefined);
     const { name, value } = e.target;
     setUser({ ...user, [name]: value });
   };
@@ -31,6 +30,25 @@ const Signup = (props: Props) => {
     try {
       const role = locate.pathname === "/signup" ? "ADMIN" : "VISITOR";
       const res = await register({ user, role });
+      localStorage.setItem("jwt", res);
+
+      setUserr({
+        isUserLoggedIn: true,
+        userData: {
+          firstName: user.firstName,
+          lastName: user.lastName,
+          email: user.email,
+        },
+      });
+      localStorage.setItem(
+        "userdata",
+        JSON.stringify({
+          firstName: user.firstName,
+          lastName: user.lastName,
+          email: user.email,
+        })
+      );
+
       if (res.error) {
         if (res.error.status === 400) {
           setErrorText("Hatalı giriş yaptınız.");
@@ -38,20 +56,14 @@ const Signup = (props: Props) => {
           setErrorText("Kullanıcı hatası");
         }
       } else {
-        navigate("/login");
+        navigate("/");
       }
     } catch (error) {
       setErrorText(error.message);
-    } finally {
-      /*     setUser({
-        firstname: '',
-        lastname: '',
-        email: '',
-        turkishId: '',
-        password: '',
-      }); */
     }
   };
+  console.log();
+
   return (
     <div className="flex flex-shrink-0 flex-col justify-start items-center min-w-[380px] w-[500px] mx-auto">
       {/* header */}
