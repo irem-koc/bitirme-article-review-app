@@ -1,30 +1,23 @@
 import Button from "@atoms/Button/Button";
 import Label from "@atoms/Label/Label";
 import Text from "@atoms/Text/Text";
-import {
-  useAuthenticateMutation,
-  useVerifySessionMutation,
-} from "@redux/services/userApi";
-import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useContext, useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { selectIsLoggedIn } from "../../redux/features/userSlice";
+import { Context } from "../../context/Context";
+import login from "../../services/login";
 
 type Props = {};
 
 const Login = (props: Props) => {
   const {} = props;
-  const isLoggedIn = useSelector(selectIsLoggedIn);
+  const { setUserr, userr } = useContext(Context);
 
   const [user, setUser] = useState({ email: "", password: "" });
   const [errorText, setErrorText] = useState();
 
-  const [authenticate, { error }] = useAuthenticateMutation();
-  const [verifySession] = useVerifySessionMutation();
-
   useEffect(() => {
     if (localStorage.getItem("jwt")) {
-      verifySession();
+      // verifySession();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -42,7 +35,19 @@ const Login = (props: Props) => {
       if (localStorage.getItem("jwt")) {
         localStorage.removeItem("jwt");
       }
-      const res = await authenticate(user);
+      const res = await login(user);
+      console.log(res, " ***********");
+
+      localStorage.setItem("jwt", res);
+      setUserr((prevUser) => ({
+        ...prevUser,
+        isUserLoggedIn: true,
+        userData: {
+          ...prevUser.userData,
+          // Burada giriş yapan kullanıcının email'ini güncelliyoruz
+          email: user.email,
+        },
+      }));
       if (res.error) {
         if (res.error.status === 422) {
           setErrorText("Kullanıcı kimliği uyuşmuyor.");
@@ -56,6 +61,7 @@ const Login = (props: Props) => {
       setUser({ email: "", password: "" });
     }
   };
+
   const location = useLocation();
   return (
     <div className="flex flex-col justify-start items-center min-w-[380px] w-[500px] mx-auto">
@@ -107,6 +113,7 @@ const Login = (props: Props) => {
           <input
             onChange={(e) => handleChange(e)}
             type={"email"}
+            value={user.email}
             name={"email"}
             id={"email"}
             className={
@@ -122,6 +129,7 @@ const Login = (props: Props) => {
           />
           <input
             onChange={(e) => handleChange(e)}
+            value={user.password}
             name={"password"}
             type={"password"}
             id={"password"}
