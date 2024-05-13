@@ -28,7 +28,7 @@ const Signup = (props: Props) => {
 
   const handleRegister = async () => {
     try {
-      const role = locate.pathname === "/signup" ? "ADMIN" : "VISITOR";
+      const role = "VISITOR";
       const res = await register({ user, role });
       localStorage.setItem("jwt", res);
 

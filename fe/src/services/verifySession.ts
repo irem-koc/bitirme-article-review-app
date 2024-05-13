@@ -12,8 +12,6 @@ const verifySession = async (token) => {
         },
       }
     );
-
-    // Gelen cevabı kontrol et
     if (response.data.status === "SUCCESS") {
       return response.data.token;
     } else {

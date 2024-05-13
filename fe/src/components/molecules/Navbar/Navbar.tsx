@@ -1,13 +1,29 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { CiLogin, CiUser } from "react-icons/ci";
 import { HiOutlineHome } from "react-icons/hi";
 import { TbListDetails } from "react-icons/tb";
 import { Link, useLocation } from "react-router-dom";
 import { Context } from "../../../context/Context";
+import getUserData from "../../../services/getUserData";
 const Navbar = () => {
   // const { data: userData } = useGetUserDataQuery();
   const location = useLocation();
-  const { userr } = useContext(Context);
+  const { userr, setUserr } = useContext(Context);
+  const [errorText, setErrorText] = useState();
+
+  const [user, setUser] = useState();
+  console.log("******", userr);
+  const handleLogin = async () => {
+    try {
+      const res = await getUserData();
+      setUserr({ isUserLoggedIn: true, userData: res });
+    } catch (error) {
+      setErrorText(error.message);
+    }
+  };
+  useEffect(() => {
+    handleLogin();
+  }, [location.pathname]);
   return (
     <div>
       <nav className="bg-gradient-to-r from-indigo-600 to-gray-800 mb-5">
@@ -67,7 +83,7 @@ const Navbar = () => {
                 </div>
               </div>
               <div className="mx-4 flex items-center justify-center">
-                {userr?.isUserLoggedIn ? (
+                {userr.userData.firstName ? (
                   <div className="flex items-center gap-1">
                     <span>
                       <CiUser fill="white" stroke="1.2" />

@@ -43,8 +43,8 @@ const Login = (props: Props) => {
         ...prevUser,
         isUserLoggedIn: true,
         userData: {
-          ...prevUser.userData,
-          // Burada giriş yapan kullanıcının email'ini güncelliyoruz
+          firstName: userr.userData.firstName,
+          lastName: userr.userData.lastName,
           email: user.email,
         },
       }));
@@ -138,6 +138,7 @@ const Login = (props: Props) => {
             }
           />
         </div>
+        {errorText ? <p className="error">{errorText}</p> : null}
         <div>
           <Button
             onclick={() => handleLogin()}

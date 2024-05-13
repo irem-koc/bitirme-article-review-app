@@ -20,7 +20,7 @@ import lombok.AllArgsConstructor;
 
 @RestController
 @RequestMapping("/api/v1/user")
-@PreAuthorize("hasRole('ADMIN')")
+@PreAuthorize("hasRole('visitor')")
 @AllArgsConstructor
 public class UserController {
     private UserRequestService userRequestService;
