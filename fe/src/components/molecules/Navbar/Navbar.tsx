@@ -1,25 +1,13 @@
-import { useEffect } from "react";
-import { CiLogin } from "react-icons/ci";
+import { useContext } from "react";
+import { CiLogin, CiUser } from "react-icons/ci";
 import { HiOutlineHome } from "react-icons/hi";
 import { TbListDetails } from "react-icons/tb";
-import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
-import {
-  selectIsLoggedIn,
-  selectUserData,
-} from "../../../redux/features/userSlice";
-type Props = {};
-
-const Navbar = (props: Props) => {
-  const {} = props;
-
-  const isLoggedIn = useSelector(selectIsLoggedIn);
-  const userData = useSelector(selectUserData);
+import { Context } from "../../../context/Context";
+const Navbar = () => {
+  // const { data: userData } = useGetUserDataQuery();
   const location = useLocation();
-  useEffect(() => {
-    console.log("isLoggedIn is ", isLoggedIn);
-    console.log(userData);
-  }, [isLoggedIn]);
+  const { userr } = useContext(Context);
   return (
     <div>
       <nav className="bg-gradient-to-r from-indigo-600 to-gray-800 mb-5">
@@ -41,9 +29,9 @@ const Navbar = (props: Props) => {
                     <Link
                       to="/"
                       className={`${
-                        location.pathname != "/details" &&
-                        location.pathname != "/login" &&
-                        location.pathname != "/signup"
+                        location.pathname !== "/details" &&
+                        location.pathname !== "/login" &&
+                        location.pathname !== "/signup"
                           ? "bg-transparent text-white border border-white"
                           : "text-gray-300"
                       } 
@@ -79,14 +67,21 @@ const Navbar = (props: Props) => {
                 </div>
               </div>
               <div className="mx-4 flex items-center justify-center">
-                {isLoggedIn ? (
-                  <p className="text-white">Hello dear: {userData.email}</p>
+                {userr?.isUserLoggedIn ? (
+                  <div className="flex items-center gap-1">
+                    <span>
+                      <CiUser fill="white" stroke="1.2" />
+                    </span>
+                    <p className="text-white">
+                      Hello, {userr?.userData?.firstName}
+                    </p>
+                  </div>
                 ) : (
                   <Link
                     to="/login"
                     className={`${
-                      location.pathname == "/login" ||
-                      location.pathname == "/signup"
+                      location.pathname === "/login" ||
+                      location.pathname === "/signup"
                         ? "bg-transparent text-white border border-white"
                         : "text-gray-300"
                     } 
