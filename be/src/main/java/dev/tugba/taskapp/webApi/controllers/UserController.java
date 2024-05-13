@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
 import dev.tugba.taskapp.business.abstracts.UserRequestService;
 import dev.tugba.taskapp.business.requests.UpdateUserEmailAddressRequest;
 import dev.tugba.taskapp.business.responses.GetAllUserDataResponse;
@@ -19,22 +20,26 @@ import lombok.AllArgsConstructor;
 
 @RestController
 @RequestMapping("/api/v1/user")
-@PreAuthorize("hasRole('VISITOR')")
+@PreAuthorize("hasRole('ADMIN')")
 @AllArgsConstructor
 public class UserController {
     private UserRequestService userRequestService;
 
     @GetMapping
     @PreAuthorize("hasAnyAuthority('visitor:read')")
-    @CrossOrigin(exposedHeaders = {"Access-Control-Allow-Origin","Access-Control-Allow-Credentials"})
-    public ResponseEntity<GetAllUserDataResponse> getAllUserData(@RequestHeader("Authorization") String bearerToken, @RequestParam String requestId) {
+    @CrossOrigin(exposedHeaders = { "Access-Control-Allow-Origin", "Access-Control-Allow-Credentials" })
+    public ResponseEntity<GetAllUserDataResponse> getAllUserData(@RequestHeader("Authorization") String bearerToken,
+            @RequestParam String requestId) {
         return ResponseEntity.ok(this.userRequestService.getAllUserData(bearerToken, requestId));
     }
 
     @PatchMapping("/update")
     @PreAuthorize("hasAuthority('visitor:update')")
-    @CrossOrigin(exposedHeaders = {"Access-Control-Allow-Origin","Access-Control-Allow-Credentials"})
-    public ResponseEntity<UpdateUserEmailAddressResponse> updateuserEmailAddress(@RequestHeader("Authorization") String bearerToken, @RequestBody @Valid UpdateUserEmailAddressRequest updateUserEmailAddressRequest) {
-        return ResponseEntity.ok(this.userRequestService.updateUserEmailAddress(bearerToken, updateUserEmailAddressRequest));
+    @CrossOrigin(exposedHeaders = { "Access-Control-Allow-Origin", "Access-Control-Allow-Credentials" })
+    public ResponseEntity<UpdateUserEmailAddressResponse> updateuserEmailAddress(
+            @RequestHeader("Authorization") String bearerToken,
+            @RequestBody @Valid UpdateUserEmailAddressRequest updateUserEmailAddressRequest) {
+        return ResponseEntity
+                .ok(this.userRequestService.updateUserEmailAddress(bearerToken, updateUserEmailAddressRequest));
     }
 }

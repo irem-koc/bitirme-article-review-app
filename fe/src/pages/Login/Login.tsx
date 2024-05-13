@@ -23,7 +23,9 @@ const Login = (props: Props) => {
   const [verifySession] = useVerifySessionMutation();
 
   useEffect(() => {
-    if (localStorage.getItem("jwt")) verifySession();
+    if (localStorage.getItem("jwt")) {
+      verifySession();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

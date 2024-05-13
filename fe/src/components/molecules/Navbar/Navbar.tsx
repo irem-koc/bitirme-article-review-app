@@ -1,13 +1,25 @@
+import { useEffect } from "react";
 import { CiLogin } from "react-icons/ci";
 import { HiOutlineHome } from "react-icons/hi";
 import { TbListDetails } from "react-icons/tb";
+import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
-
+import {
+  selectIsLoggedIn,
+  selectUserData,
+} from "../../../redux/features/userSlice";
 type Props = {};
 
 const Navbar = (props: Props) => {
   const {} = props;
+
+  const isLoggedIn = useSelector(selectIsLoggedIn);
+  const userData = useSelector(selectUserData);
   const location = useLocation();
+  useEffect(() => {
+    console.log("isLoggedIn is ", isLoggedIn);
+    console.log(userData);
+  }, [isLoggedIn]);
   return (
     <div>
       <nav className="bg-gradient-to-r from-indigo-600 to-gray-800 mb-5">
@@ -67,24 +79,28 @@ const Navbar = (props: Props) => {
                 </div>
               </div>
               <div className="mx-4 flex items-center justify-center">
-                <Link
-                  to="/login"
-                  className={`${
-                    location.pathname == "/login" ||
-                    location.pathname == "/signup"
-                      ? "bg-transparent text-white border border-white"
-                      : "text-gray-300"
-                  } 
+                {isLoggedIn ? (
+                  <p className="text-white">Hello dear: {userData.email}</p>
+                ) : (
+                  <Link
+                    to="/login"
+                    className={`${
+                      location.pathname == "/login" ||
+                      location.pathname == "/signup"
+                        ? "bg-transparent text-white border border-white"
+                        : "text-gray-300"
+                    } 
                   sm:hover:bg-indigo-900 flex items-center sm:hover:text-white rounded-md px-3 py-2 text-sm font-medium sm:active:bg-black sm:active:text-white ${
                     window.innerWidth <= 640 ? "hidden" : "block"
                   }`}
-                  aria-current="page"
-                >
-                  <span className="pr-2">
-                    <CiLogin />
-                  </span>
-                  Log in / Sign up
-                </Link>
+                    aria-current="page"
+                  >
+                    <span className="pr-2">
+                      <CiLogin />
+                    </span>
+                    Log in / Sign up
+                  </Link>
+                )}
               </div>
             </div>
           </div>

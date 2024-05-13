@@ -3,14 +3,14 @@ import Label from "@atoms/Label/Label";
 import Text from "@atoms/Text/Text";
 import { useRegisterMutation } from "@redux/services/userApi";
 import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 type Props = {};
 
 const Signup = (props: Props) => {
   const {} = props;
   const locate = useLocation();
-
+  const navigate = useNavigate();
   const [user, setUser] = useState({
     firstName: "",
     lastName: "",
@@ -38,7 +38,7 @@ const Signup = (props: Props) => {
           setErrorText("Kullanıcı hatası");
         }
       } else {
-        navigate("/");
+        navigate("/login");
       }
     } catch (error) {
       setErrorText(error.message);

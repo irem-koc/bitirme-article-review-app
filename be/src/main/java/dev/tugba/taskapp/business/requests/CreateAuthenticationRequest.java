@@ -1,6 +1,5 @@
 package dev.tugba.taskapp.business.requests;
 
-import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -19,10 +18,11 @@ public class CreateAuthenticationRequest {
     @NotBlank(message = "accountcode : must not be blank")
     private String accountcode;
 
-    @AssertTrue(message = "accountcode: must be a valid email or have 11 digit characters")
-    private boolean isValidTurkishId() {
-        return accountcode.matches("^\\d*\\.?\\d+$") || isValidEmail(accountcode);
-    }
+    // @AssertTrue(message = "accountcode: must be a valid email or have 11 digit
+    // characters")
+    // private boolean isValidTurkishId() {
+    // return accountcode.matches("^\\d*\\.?\\d+$") || isValidEmail(accountcode);
+    // }
 
     private boolean isValidEmail(String email) {
         return email.matches("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,6}$");

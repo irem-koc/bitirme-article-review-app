@@ -33,7 +33,8 @@ export const userApi = createApi({
         url: "/auth/authenticate",
         method: "POST",
         body: {
-          ...user,
+          accountcode: user.email,
+          password: user.password,
           requestId: uuidv4(),
         },
       }),
@@ -63,11 +64,12 @@ export const userApi = createApi({
       onQueryStarted: async (credentials, { dispatch, queryFulfilled }) => {
         try {
           const { data } = await queryFulfilled;
+          console.log(data, " is here that");
+
           dispatch(
             setUserData({
               firstname: data.firstname,
               lastname: data.lastname,
-              turkishId: data.turkishId,
               email: data.email,
             })
           );
