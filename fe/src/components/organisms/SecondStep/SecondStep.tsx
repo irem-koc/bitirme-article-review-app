@@ -34,13 +34,15 @@ const SecondStep = (props: Props) => {
   const [selectedValues, setSelectedValues] = useState(
     Array(data.length).fill("")
   );
+
   useEffect(() => {
     // Kullanıcının bir sonraki adıma geçtiğinde görev durumundaki değerleri selectedValues'e atayın
     setSelectedValues(task.scores);
   }, []);
 
   useEffect(() => {
-    const allAnswered = selectedValues.every((value) => value !== "");
+    const allAnswered =
+      selectedValues.filter((value) => value !== "").length === 4;
     setErrorText(allAnswered ? undefined : "All questions must be answered.");
   }, [selectedValues]);
 
@@ -52,7 +54,7 @@ const SecondStep = (props: Props) => {
   };
 
   const handleNext = () => {
-    if (selectedValues.every((value) => value !== "")) {
+    if (selectedValues.filter((value) => value !== "").length === 4) {
       navigate("/review/3");
     } else {
       setErrorText("All questions must be answered.");
@@ -136,10 +138,10 @@ const SecondStep = (props: Props) => {
       <div className="flex items-center justify-end w-3/6 mx-auto my-6">
         <button
           type="submit"
-          disabled={selectedValues.some((value) => value === "")}
+          disabled={selectedValues.filter((value) => value !== "").length !== 4}
           onClick={handleNext}
           className={`flex items-center rounded-lg p-2 text-white ${
-            selectedValues.some((value) => value === "")
+            selectedValues.filter((value) => value !== "").length !== 4
               ? "bg-gray-400"
               : "bg-indigo-600"
           }`}
