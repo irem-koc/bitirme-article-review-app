@@ -9,9 +9,17 @@ type UserType = {
   };
 };
 
+type TaskType = {
+  title: string;
+  scores: number[];
+  review: string;
+};
+
 type ContextType = {
   userr: UserType;
   setUserr: React.Dispatch<React.SetStateAction<UserType>>;
+  task: TaskType;
+  setTask: React.Dispatch<React.SetStateAction<TaskType>>;
 };
 
 export const Context = createContext<ContextType>({
@@ -20,6 +28,8 @@ export const Context = createContext<ContextType>({
     userData: { firstName: null, lastName: null, email: null },
   },
   setUserr: () => {},
+  task: { title: "", scores: [], review: "" },
+  setTask: () => {},
 });
 
 type Props = {
@@ -32,8 +42,15 @@ const ContextProvider = ({ children }: Props) => {
     userData: { firstName: null, lastName: null, email: null },
   });
 
+  const [task, setTask] = useState<TaskType>({
+    title: "",
+    scores: [],
+    review: "",
+  });
+
   useEffect(() => {
-    const loggedIn = localStorage.getItem("jwt") ? true : false;
+    const jwt = localStorage.getItem("jwt");
+    const loggedIn = jwt ? true : false;
     const userDataStr = localStorage.getItem("userdata");
     if (userDataStr) {
       const userDataObj = JSON.parse(userDataStr);
@@ -50,7 +67,8 @@ const ContextProvider = ({ children }: Props) => {
     }
   }, []);
 
-  const values = { userr, setUserr };
+  const values = { userr, setUserr, task, setTask };
+
   return <Context.Provider value={values}>{children}</Context.Provider>;
 };
 
