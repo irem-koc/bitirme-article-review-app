@@ -1,4 +1,3 @@
-import Button from "@atoms/Button/Button";
 import Label from "@atoms/Label/Label";
 import Text from "@atoms/Text/Text";
 import { Context } from "@context/Context";
@@ -14,8 +13,7 @@ const Login = (props: Props) => {
   const { setUserr, userr } = useContext(Context);
 
   const [user, setUser] = useState({ email: "", password: "" });
-  const [errorText, setErrorText] = useState();
-
+  const [errorText, setErrorText] = useState<string | undefined>();
   useEffect(() => {
     if (localStorage.getItem("jwt")) {
       verifySession();
@@ -26,7 +24,7 @@ const Login = (props: Props) => {
   const navigate = useNavigate();
 
   const handleChange = (e) => {
-    setErrorText();
+    setErrorText("");
     const { name, value } = e.target;
     setUser({ ...user, [name]: value });
   };
@@ -140,13 +138,18 @@ const Login = (props: Props) => {
         </div>
         {errorText ? <p className="error">{errorText}</p> : null}
         <div>
-          <Button
-            onclick={() => handleLogin()}
-            style={[
-              "w-full rounded-md text-white text-[14px] font-semibold text-center bg-indigo-800 py-2 px-3",
-            ]}
-            content={"GİRİŞ YAP"}
-          />
+          <button
+            type="submit"
+            disabled={!user.email || !user.password}
+            onClick={handleLogin}
+            className={`w-full rounded-md text-white text-[14px] font-semibold text-center py-2 px-3 ${
+              !user.email || !user.password
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-indigo-600 hover:bg-indigo-700"
+            }`}
+          >
+            GİRİŞ YAP
+          </button>
         </div>
       </div>
     </div>

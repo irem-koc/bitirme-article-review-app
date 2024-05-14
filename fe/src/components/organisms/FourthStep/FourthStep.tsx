@@ -31,9 +31,11 @@ const FourthStep = (props: Props) => {
   ];
 
   useEffect(() => {
-    const allAnswered =
-      selectedValues.filter((value) => value !== "").length === 12;
-    setErrorText(allAnswered ? undefined : "All questions must be answered.");
+    if (selectedValues.filter((value) => value !== "").length === 12) {
+      setErrorText(undefined);
+    } else {
+      setErrorText("All questions must be answered.");
+    }
   }, [selectedValues]);
 
   const handleRadioChange = (index: number, value: string) => {
@@ -111,11 +113,6 @@ const FourthStep = (props: Props) => {
               ? "bg-gray-400"
               : "bg-indigo-600"
           }`}
-          onMouseEnter={() => {
-            if (selectedValues.filter((value) => value !== "").length === 12) {
-              setErrorText(undefined);
-            }
-          }}
         >
           Next
           <span className="pl-1">
