@@ -8,10 +8,16 @@ type Props = {};
 
 const FirstStep = (props: Props) => {
   const {} = props;
-  const { task, setTask } = useContext(Context);
+  const { userr, task, setTask, loggedIn } = useContext(Context); // loggedIn değerini ekledik
   const navigate = useNavigate();
   const [errorText, setErrorText] = useState<string | undefined>();
   const [isDisabled, setIsDisabled] = useState(true);
+
+  useEffect(() => {
+    if (!userr.isUserLoggedIn) {
+      navigate("/login");
+    }
+  }, [userr.isUserLoggedIn, navigate]);
 
   useEffect(() => {
     setIsDisabled(!task.title || task.title.trim().length === 0);
