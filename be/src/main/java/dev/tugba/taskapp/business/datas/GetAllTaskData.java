@@ -14,8 +14,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class GetAllTaskData {
     private int id;
-    private List<String> scores;
     private String title;
+    private List<String> scores;
+    private String overallAssessment;
+    private List<String> detailedComments;
     private String review;
     private User user;
 }
