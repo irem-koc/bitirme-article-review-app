@@ -10,7 +10,7 @@ const addReview = async (reviewData: any) => {
     }
 
     const response = await api.post(
-      "http://localhost:8080/api/v1/review", // Adjust the URL as needed
+      "http://localhost:8080/api/v1/task", // Adjust the URL as needed
       {
         ...reviewData,
         requestId: uuidv4(),
