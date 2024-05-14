@@ -11,8 +11,10 @@ type UserType = {
 
 type TaskType = {
   title: string;
-  scores: number[];
+  scores: string[];
   review: string;
+  overallAssessment: string;
+  detailedComments: string[];
 };
 
 type ContextType = {
@@ -28,7 +30,13 @@ export const Context = createContext<ContextType>({
     userData: { firstName: null, lastName: null, email: null },
   },
   setUserr: () => {},
-  task: { title: "", scores: [], review: "" },
+  task: {
+    title: "",
+    scores: [],
+    review: "",
+    overallAssessment: "",
+    detailedComments: [],
+  },
   setTask: () => {},
 });
 
@@ -45,6 +53,8 @@ const ContextProvider = ({ children }: Props) => {
   const [task, setTask] = useState<TaskType>({
     title: "",
     scores: [],
+    overallAssessment: "",
+    detailedComments: [],
     review: "",
   });
 
