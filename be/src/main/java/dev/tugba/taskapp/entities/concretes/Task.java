@@ -35,6 +35,9 @@ public class Task {
     @Column(name = "scores")
     private List<String> scores;
 
+    @Column(name = "review")
+    private String review;
+
     @ManyToOne
     @JsonIgnore
     @JoinColumn(name = "user_id", referencedColumnName = "id")
