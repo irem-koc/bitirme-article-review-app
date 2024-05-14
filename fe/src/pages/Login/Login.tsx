@@ -1,10 +1,11 @@
 import Button from "@atoms/Button/Button";
 import Label from "@atoms/Label/Label";
 import Text from "@atoms/Text/Text";
+import { Context } from "@context/Context";
+import login from "@services/login";
+import verifySession from "@services/verifySession";
 import { useContext, useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Context } from "../../context/Context";
-import login from "../../services/login";
 
 type Props = {};
 
@@ -17,7 +18,7 @@ const Login = (props: Props) => {
 
   useEffect(() => {
     if (localStorage.getItem("jwt")) {
-      // verifySession();
+      verifySession();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -36,7 +37,6 @@ const Login = (props: Props) => {
         localStorage.removeItem("jwt");
       }
       const res = await login(user);
-      console.log(res, " ***********");
 
       localStorage.setItem("jwt", res);
       setUserr((prevUser) => ({

@@ -1,15 +1,15 @@
 import Button from "@atoms/Button/Button";
 import Label from "@atoms/Label/Label";
 import Text from "@atoms/Text/Text";
+import { Context } from "@context/Context";
+import register from "@services/register";
 import { useContext, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Context } from "../../context/Context";
-import register from "../../services/register";
 
 type Props = {};
 
 const Signup = (props: Props) => {
-  const { userr, setUserr } = useContext(Context);
+  const { setUserr } = useContext(Context);
   const locate = useLocation();
   const navigate = useNavigate();
   const [user, setUser] = useState({
@@ -62,7 +62,6 @@ const Signup = (props: Props) => {
       setErrorText(error.message);
     }
   };
-  console.log();
 
   return (
     <div className="flex flex-shrink-0 flex-col justify-start items-center min-w-[380px] w-[500px] mx-auto">
@@ -199,7 +198,7 @@ const Signup = (props: Props) => {
         <div>
           <Button
             style={[
-              "w-full rounded-md text-white text-[14px] font-semibold text-center bg-indigo-800 py-2 px-3",
+              "w-3/6 rounded-md text-white text-[14px] font-semibold text-center bg-indigo-800 py-2 px-3",
               `${errorText} ? disabled:""`,
             ]}
             onclick={() => handleRegister()}

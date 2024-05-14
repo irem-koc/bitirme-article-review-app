@@ -1,10 +1,10 @@
+import { Context } from "@context/Context";
+import getUserData from "@services/getUserData";
 import { useContext, useEffect, useState } from "react";
 import { CiLogin, CiUser } from "react-icons/ci";
 import { HiOutlineHome } from "react-icons/hi";
 import { TbListDetails } from "react-icons/tb";
 import { Link, useLocation } from "react-router-dom";
-import { Context } from "../../../context/Context";
-import getUserData from "../../../services/getUserData";
 const Navbar = () => {
   // const { data: userData } = useGetUserDataQuery();
   const location = useLocation();
@@ -12,7 +12,6 @@ const Navbar = () => {
   const [errorText, setErrorText] = useState();
 
   const [user, setUser] = useState();
-  console.log("******", userr);
   const handleLogin = async () => {
     try {
       const res = await getUserData();
