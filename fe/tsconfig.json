@@ -24,14 +24,14 @@
       "@/.": ["src/*"],
       "@route/*": ["src/route/*"],
       "@types/*": ["src/types/*"],
-      "@redux/*": ["src/redux/*"],
+      "@context/*": ["src/context/*"],
       "@assets/*": ["src/assets/*"],
       "@components/*": ["src/components/*"],
       "@atoms/*": ["src/components/atoms/*"],
       "@molecules/*": ["src/components/molecules/*"],
       "@organisms/*": ["src/components/organisms/*"],
       "@pages/*": ["src/pages/*"],
-      "@features/*": ["src/features/*"]
+      "@services/*": ["src/services/*"]
     }
   },
   "include": ["src"],
