@@ -18,6 +18,9 @@ const LastStep = (props: Props) => {
       await addReview(task);
       navigate("/success");
     } catch (err) {
+      console.log("*********");
+      console.log(task);
+
       setErrorText(err);
     } finally {
       // setTask({ title: "", body: "" });

@@ -1,5 +1,7 @@
 package dev.tugba.taskapp.business.requests;
 
+import java.util.List;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -18,13 +20,26 @@ public class CreateTaskRequest {
     @NotBlank(message = "title : must not be blank")
     private String title;
 
-    @NotNull(message = "body : must not be null")
-    @NotEmpty(message = "body : must not be empty")
-    @NotBlank(message = "body : must not be blank")
-    private String body;
+    @NotNull(message = "review : must not be null")
+    @NotEmpty(message = "review : must not be empty")
+    @NotBlank(message = "review : must not be blank")
+    private String review;
 
-    @NotNull(message = "body : must not be null")
-    @NotEmpty(message = "body : must not be empty")
-    @NotBlank(message = "body : must not be blank")
+    @NotNull(message = "scores : must not be null")
+    @NotEmpty(message = "scores : must not be empty")
+    // @@NotBlankList(message = "scores : must not be blank")
+    private List<String> scores;
+
+    @NotNull(message = "overallAssesment : must not be null")
+    @NotEmpty(message = "overallAssesment : must not be empty")
+    @NotBlank(message = "overallAssesment : must not be blank")
+    private String overallAssesment;
+
+    @NotNull(message = "detailedComments : must not be null")
+    @NotEmpty(message = "detailedComments : must not be empty")
+    // @NotBlank(message = "detailedComments : must not be blank")
+    private List<String> detailedComments;
+
+    @NotBlank(message = "Request ID must not be blank")
     private String requestId;
 }

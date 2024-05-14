@@ -13,7 +13,8 @@ import lombok.NoArgsConstructor;
 @Builder
 public class PostTaskResponse {
     private String title;
-    private String body;
+    private String scores;
+    private String review;
     private String status;
     private LocalDateTime datetime;
     private String requestId;
