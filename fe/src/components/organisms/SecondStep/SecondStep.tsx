@@ -42,7 +42,7 @@ const SecondStep = (props: Props) => {
 
   useEffect(() => {
     const allAnswered =
-      selectedValues.filter((value) => value !== "").length === 4;
+      selectedValues.filter((value) => value !== undefined).length === 4;
     setErrorText(allAnswered ? undefined : "All questions must be answered.");
   }, [selectedValues]);
 
@@ -60,6 +60,9 @@ const SecondStep = (props: Props) => {
       setErrorText("All questions must be answered.");
     }
   };
+  console.log(selectedValues);
+
+  console.log(selectedValues.filter((value) => value !== "").length !== 4);
 
   return (
     <div>
@@ -138,10 +141,12 @@ const SecondStep = (props: Props) => {
       <div className="flex items-center justify-end w-3/6 mx-auto my-6">
         <button
           type="submit"
-          disabled={selectedValues.filter((value) => value !== "").length !== 4}
+          disabled={
+            selectedValues.filter((value) => value !== undefined).length !== 4
+          }
           onClick={handleNext}
           className={`flex items-center rounded-lg p-2 text-white ${
-            selectedValues.filter((value) => value !== "").length !== 4
+            selectedValues.filter((value) => value !== undefined).length !== 4
               ? "bg-gray-400"
               : "bg-indigo-600"
           }`}
