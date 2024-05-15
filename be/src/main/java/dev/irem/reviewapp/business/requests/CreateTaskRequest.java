@@ -25,6 +25,10 @@ public class CreateTaskRequest {
     @NotBlank(message = "review : must not be blank")
     private String review;
 
+    @NotNull(message = "articleId : must not be null")
+    @NotEmpty(message = "articleId : must not be empty")
+    @NotBlank(message = "articleId : must not be blank")
+    private String articleId;
     @NotNull(message = "scores : must not be null")
     @NotEmpty(message = "scores : must not be empty")
     // @@NotBlankList(message = "scores : must not be blank")

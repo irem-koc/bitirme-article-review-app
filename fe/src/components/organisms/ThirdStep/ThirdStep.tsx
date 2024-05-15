@@ -33,16 +33,16 @@ const ThirdStep = (props: Props) => {
   };
 
   return (
-    <div className="mt-4 max-w-screen-lg mx-auto">
+    <div className="mt-4 max-w-screen-lg mx-auto p-7">
       <div className="flex flex-col items-center">
         <div className="overflow-x-auto w-full">
           <table className="border-collapse border w-full">
             <thead>
               <tr>
-                <th className="border p-2 w-2/3">
+                <th className="border p-2 w-2/3 font-semibold">
                   Overall Assessment and Recommendation:
                 </th>
-                <th className="border p-2 w-1/3">Response</th>
+                <th className="border p-2 w-1/3 font-semibold">Response</th>
               </tr>
             </thead>
             <tbody>

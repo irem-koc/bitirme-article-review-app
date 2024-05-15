@@ -64,13 +64,13 @@ const SecondStep = (props: Props) => {
   };
 
   return (
-    <div className="mt-4 max-w-screen-lg mx-auto">
+    <div className="mt-4 max-w-screen-lg mx-auto p-7">
       {/* Maksimum genişlik ayarı yapıldı */}
       <table className="border-collapse border w-full">
         <thead>
           <tr>
-            <th className="border p-2">Questions</th>
-            <th className="border p-2">Response</th>
+            <th className="border p-2 font-semibold">Questions</th>
+            <th className="border p-2 font-semibold">Response</th>
           </tr>
         </thead>
         <tbody>

@@ -44,6 +44,9 @@ public class Task {
     @Column(name = "review")
     private String review;
 
+    @Column(name = "articleId")
+    private String articleId;
+
     @ManyToOne
     @JsonIgnore
     @JoinColumn(name = "user_id", referencedColumnName = "id")

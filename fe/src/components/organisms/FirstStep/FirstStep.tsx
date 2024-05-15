@@ -43,9 +43,28 @@ const FirstStep = (props: Props) => {
       <form className="w-full max-w-md p-10 pt-5" onSubmit={handleNext}>
         <div className="items-start mb-5">
           <Label
+            content="Article ID"
+            htmlFor="articleId"
+            style={["text-md font-semibold leading-6 text-gray-900"]}
+          />
+          <div className="mt-2 rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
+            <input
+              onChange={handleChange}
+              value={task.articleId}
+              type="text"
+              id="articleId"
+              name="articleId"
+              autoComplete="articleId"
+              className="block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500 placeholder-gray-400 text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 sm:text-sm"
+              placeholder="Enter articleId"
+              aria-describedby="articleId-error"
+              aria-invalid={!!errorText}
+            />
+          </div>
+          <Label
             content="Title"
             htmlFor="title"
-            style={["text-sm font-medium leading-6 text-gray-900"]}
+            style={["text-md font-semibold leading-6 text-gray-900"]}
           />
           <div className="mt-2 rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
             <input

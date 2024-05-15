@@ -31,21 +31,21 @@ const LastStep = (props: Props) => {
   const isSubmitDisabled = !task.review || !task.review.trim();
 
   return (
-    <div>
-      <div className="flex flex-col items-center mt-4">
-        <div className="items-start w-1/2 mb-5">
+    <div className="mt-4 max-w-screen-md mx-auto p-7">
+      <div className="flex flex-col items-center">
+        <div className="items-start w-full mb-5">
           <Label
             content={"Is there any other negative you would like to add?"}
             htmlFor={"review"}
-            style={[""]}
+            style={["text-md font-semibold leading-6 text-gray-900"]}
           />
-          <div className="mt-2 rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 ">
+          <div className="mt-2 rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
             <textarea
               rows={6}
               name="review"
               id="review"
               autoComplete="paperId"
-              className="w-full  outline-none flex-1 border-0 bg-transparent  p-2 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+              className="block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500 placeholder-gray-400 text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 sm:text-sm"
               placeholder="ex. bla bla bla"
               value={task.review}
               onChange={(e) => setTask({ ...task, review: e.target.value })}
@@ -53,7 +53,7 @@ const LastStep = (props: Props) => {
           </div>
         </div>
       </div>
-      <div className="flex items-center justify-end w-3/6 mx-auto my-6">
+      <div className="flex items-center justify-end w-full mx-auto my-6">
         <button
           type="submit"
           disabled={isSubmitDisabled}

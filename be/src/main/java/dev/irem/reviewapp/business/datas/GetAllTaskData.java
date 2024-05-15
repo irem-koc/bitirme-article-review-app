@@ -15,6 +15,7 @@ import lombok.NoArgsConstructor;
 public class GetAllTaskData {
     private int id;
     private String title;
+    private String articleId;
     private List<String> scores;
     private String overallAssessment;
     private List<String> detailedComments;

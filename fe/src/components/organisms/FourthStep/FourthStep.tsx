@@ -58,17 +58,17 @@ const FourthStep = (props: Props) => {
   };
 
   return (
-    <div className="mt-4 max-w-screen-lg mx-auto">
+    <div className="mt-4 max-w-screen-lg mx-auto p-7">
       <div className="flex flex-col items-center">
         <div className="overflow-x-auto">
           <table className="border-collapse border w-full">
             <thead>
               <tr>
-                <th className="border p-2">
+                <th className="border p-2 font-semibold">
                   Detailed Comments to the Author/s :
                 </th>
-                <th className="border p-2">Yes</th>
-                <th className="border p-2">No</th>
+                <th className="border p-2 font-semibold">Yes</th>
+                <th className="border p-2 font-semibold">No</th>
               </tr>
             </thead>
             <tbody>

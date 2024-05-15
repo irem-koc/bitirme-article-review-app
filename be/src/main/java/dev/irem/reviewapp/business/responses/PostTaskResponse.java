@@ -16,6 +16,7 @@ public class PostTaskResponse {
     private String title;
     private List<String> scores;
     private String review;
+    private String articleId;
     private String overallAssessment;
     private List<String> detailedComments;
     private String status;
