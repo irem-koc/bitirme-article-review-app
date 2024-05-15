@@ -12,12 +12,14 @@ function App() {
       verifySession().then((res) => {
         if (res.status === "SUCCESS") {
           navigate("/");
-        } else if (res.data.status === "FAILED") {
-          navigate("/");
+        } else if (res.status === "FAILED") {
+          navigate("/login");
+          localStorage.setItem("jwt", "");
+          localStorage.setItem("userdata", "");
         }
       });
     }
-  }, [userr.isLoggedIn, navigate, verifySession]);
+  }, [userr.isUserLoggedIn, navigate]);
   return (
     <h1 className="">
       <Navbar />

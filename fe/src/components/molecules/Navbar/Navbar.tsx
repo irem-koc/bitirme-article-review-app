@@ -1,7 +1,7 @@
 import { Context } from "@context/Context";
 import getUserData from "@services/getUserData";
 import { useContext, useEffect, useState } from "react";
-import { CiLogin, CiUser } from "react-icons/ci";
+import { CiLogin, CiLogout, CiUser } from "react-icons/ci";
 import { HiOutlineHome } from "react-icons/hi";
 import { TbListDetails } from "react-icons/tb";
 import { Link, useLocation } from "react-router-dom";
@@ -19,6 +19,11 @@ const Navbar = () => {
     } catch (error) {
       setErrorText(error.message);
     }
+  };
+  const handleLogout = () => {
+    localStorage.setItem("jwt", "");
+    localStorage.setItem("userdata", "");
+    setUserr({ ...userr, isUserLoggedIn: false });
   };
   useEffect(() => {
     handleLogin();
@@ -83,13 +88,33 @@ const Navbar = () => {
               </div>
               <div className="mx-4 flex items-center justify-center">
                 {userr.userData.firstName ? (
-                  <div className="flex items-center gap-1">
-                    <span>
-                      <CiUser fill="white" stroke="1.2" />
-                    </span>
-                    <p className="text-white">
-                      Hello, {userr?.userData?.firstName}
-                    </p>
+                  <div className="flex gap-3">
+                    <div className="flex items-center gap-1">
+                      <span>
+                        <CiUser fill="white" stroke="1.2" />
+                      </span>
+                      <p className="text-white">
+                        Hello, {userr?.userData?.firstName}
+                      </p>
+                    </div>
+                    <Link
+                      to="/login"
+                      className={`${
+                        location.pathname === "/login" ||
+                        location.pathname === "/signup"
+                          ? "bg-transparent text-white border border-white"
+                          : "text-gray-300"
+                      } 
+                  sm:hover:bg-indigo-900 flex items-center sm:hover:text-white rounded-md px-3 py-2 text-sm font-medium sm:active:bg-black sm:active:text-white ${
+                    window.innerWidth <= 640 ? "hidden" : "block"
+                  }`}
+                      aria-current="page"
+                    >
+                      <span onClick={() => handleLogout()} className="pr-2">
+                        <CiLogout stroke="1.2" />
+                      </span>
+                      Logout
+                    </Link>
                   </div>
                 ) : (
                   <Link

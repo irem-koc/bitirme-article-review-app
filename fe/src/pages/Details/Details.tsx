@@ -24,6 +24,7 @@ const Details = (props: Props) => {
   return (
     <div>
       {errorText ? <p className="error">{errorText}</p> : null}
+      {tasks?.length} adet review girdiniz.
       {tasks?.map((task) => (
         <div>
           <div>{task.title}</div>
