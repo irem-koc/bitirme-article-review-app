@@ -39,8 +39,8 @@ const FirstStep = (props: Props) => {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center mt-4">
-      <form className="w-full max-w-md p-10" onSubmit={handleNext}>
+    <div className="flex flex-col justify-center items-center">
+      <form className="w-full max-w-md p-10 pt-5" onSubmit={handleNext}>
         <div className="items-start mb-5">
           <Label
             content="Title"
