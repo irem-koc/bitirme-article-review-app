@@ -14,6 +14,8 @@ const verifySession = async () => {
     if (response.data.status === "SUCCESS") {
       return response.data;
     } else {
+      localStorage.removeItem("jwt");
+      localStorage.removeItem("userdata");
       throw new Error("Session verification failed");
     }
   } catch (error) {
