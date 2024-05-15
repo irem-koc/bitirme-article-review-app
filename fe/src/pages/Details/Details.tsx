@@ -25,7 +25,13 @@ const Details = (props: Props) => {
     <div>
       {errorText ? <p className="error">{errorText}</p> : null}
       {tasks?.map((task) => (
-        <div>{task.title}</div>
+        <div>
+          <div>{task.title}</div>
+          <div>{task.scores}</div>
+          <div>{task.review}</div>
+          <div>{task.overallAssessment}</div>
+          <div>{task.detailedComments}</div>
+        </div>
       ))}
     </div>
   );
