@@ -30,10 +30,10 @@ public class CreateTaskRequest {
     // @@NotBlankList(message = "scores : must not be blank")
     private List<String> scores;
 
-    @NotNull(message = "overallAssesment : must not be null")
-    @NotEmpty(message = "overallAssesment : must not be empty")
-    @NotBlank(message = "overallAssesment : must not be blank")
-    private String overallAssesment;
+    @NotNull(message = "overallAssessment : must not be null")
+    @NotEmpty(message = "overallAssessment : must not be empty")
+    @NotBlank(message = "overallAssessment : must not be blank")
+    private String overallAssessment;
 
     @NotNull(message = "detailedComments : must not be null")
     @NotEmpty(message = "detailedComments : must not be empty")

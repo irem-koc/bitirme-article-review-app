@@ -1,6 +1,7 @@
 package dev.tugba.taskapp.business.responses;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,8 +14,10 @@ import lombok.NoArgsConstructor;
 @Builder
 public class PostTaskResponse {
     private String title;
-    private String scores;
+    private List<String> scores;
     private String review;
+    private String overallAssessment;
+    private List<String> detailedComments;
     private String status;
     private LocalDateTime datetime;
     private String requestId;

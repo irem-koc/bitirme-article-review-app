@@ -1,5 +1,7 @@
 package dev.tugba.taskapp.webApi.controllers;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -30,32 +32,37 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class TasksController {
     private TaskService taskService;
+    private static final Logger logger = LoggerFactory.getLogger(TasksController.class);
 
     @PostMapping
     @PreAuthorize("hasAuthority('visitor:create')")
-    @CrossOrigin(exposedHeaders = {"Access-Control-Allow-Origin","Access-Control-Allow-Credentials"})
-    public ResponseEntity<PostTaskResponse> add(@RequestBody @Valid CreateTaskRequest createTaskRequest, @RequestHeader("Authorization") String bearerToken) {
+    @CrossOrigin(exposedHeaders = { "Access-Control-Allow-Origin", "Access-Control-Allow-Credentials" })
+    public ResponseEntity<PostTaskResponse> add(@RequestBody @Valid CreateTaskRequest createTaskRequest,
+            @RequestHeader("Authorization") String bearerToken) {
+        logger.info("Received CreateTaskRequest: {}", createTaskRequest);
         return ResponseEntity.ok(this.taskService.add(createTaskRequest, bearerToken));
     }
 
     @DeleteMapping
     @PreAuthorize("hasAuthority('visitor:delete')")
-    @CrossOrigin(exposedHeaders = {"Access-Control-Allow-Origin","Access-Control-Allow-Credentials"})
-    public ResponseEntity<DeleteTaskResponse> delete(@RequestHeader("Authorization") String bearerToken, @RequestBody @Valid DeleteTaskRequest deleteTaskRequest) {
+    @CrossOrigin(exposedHeaders = { "Access-Control-Allow-Origin", "Access-Control-Allow-Credentials" })
+    public ResponseEntity<DeleteTaskResponse> delete(@RequestHeader("Authorization") String bearerToken,
+            @RequestBody @Valid DeleteTaskRequest deleteTaskRequest) {
         return ResponseEntity.ok(this.taskService.delete(deleteTaskRequest));
     }
 
     @PatchMapping
     @PreAuthorize("hasAuthority('visitor:update')")
-    @CrossOrigin(exposedHeaders = {"Access-Control-Allow-Origin","Access-Control-Allow-Credentials"})
+    @CrossOrigin(exposedHeaders = { "Access-Control-Allow-Origin", "Access-Control-Allow-Credentials" })
     public ResponseEntity<UpdateTaskResponse> update(@RequestBody @Valid UpdateTaskRequest updateTaskRequest) {
         return ResponseEntity.ok(this.taskService.update(updateTaskRequest));
     }
-    
+
     @GetMapping
     @PreAuthorize("hasAuthority('visitor:read')")
-    @CrossOrigin(exposedHeaders = {"Access-Control-Allow-Origin","Access-Control-Allow-Credentials"})
-    public ResponseEntity<GetAllTaskResponse> getAllTask(@RequestHeader("Authorization") String bearerToken, @RequestParam String requestId) {
+    @CrossOrigin(exposedHeaders = { "Access-Control-Allow-Origin", "Access-Control-Allow-Credentials" })
+    public ResponseEntity<GetAllTaskResponse> getAllTask(@RequestHeader("Authorization") String bearerToken,
+            @RequestParam String requestId) {
         return ResponseEntity.ok(this.taskService.getAllTask(bearerToken, requestId));
     }
 }
