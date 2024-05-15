@@ -104,7 +104,7 @@ const Navbar = () => {
                       className={`${
                         location.pathname === "/login" ||
                         location.pathname === "/signup"
-                          ? "bg-transparent text-white border border-white"
+                          ? "bg-transparent hidden md:flex text-white border border-white"
                           : "text-gray-300"
                       } 
                   sm:hover:bg-indigo-900 flex items-center sm:hover:text-white rounded-md px-3 py-2 text-sm font-medium sm:active:bg-black sm:active:text-white ${
