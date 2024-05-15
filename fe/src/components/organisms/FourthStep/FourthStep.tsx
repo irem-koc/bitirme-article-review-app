@@ -1,4 +1,4 @@
-import { Context } from "@context/Context"; // Context'i doğru dosyadan import et
+import { Context } from "@context/Context";
 import { useContext, useEffect, useState } from "react";
 import { GrFormNextLink } from "react-icons/gr";
 import { useNavigate } from "react-router-dom";
@@ -8,13 +8,14 @@ type Props = {};
 const FourthStep = (props: Props) => {
   const {} = props;
   const { task, setTask } = useContext(Context);
+  const navigate = useNavigate();
+  const [errorText, setErrorText] = useState<string | undefined>();
   const [selectedValues, setSelectedValues] = useState<string[]>(
     Array.isArray(task.detailedComments) && task.detailedComments.length === 12
       ? task.detailedComments
       : Array(12).fill("")
   );
-  const [errorText, setErrorText] = useState<string | undefined>();
-  const navigate = useNavigate();
+
   const questionTexts = [
     "The similarity ratio of the paper should be lower than 30%.",
     "Title should reflect the relation of your paper to intelligence and fuzziness",
@@ -31,7 +32,7 @@ const FourthStep = (props: Props) => {
   ];
 
   useEffect(() => {
-    if (selectedValues.filter((value) => value !== "").length === 12) {
+    if (selectedValues.every((value) => value !== "")) {
       setErrorText(undefined);
     } else {
       setErrorText("All questions must be answered.");
@@ -49,7 +50,7 @@ const FourthStep = (props: Props) => {
   };
 
   const handleNext = () => {
-    if (selectedValues.filter((value) => value !== "").length === 12) {
+    if (selectedValues.every((value) => value !== "")) {
       navigate("/review/5");
     } else {
       setErrorText("All questions must be answered.");
@@ -57,61 +58,61 @@ const FourthStep = (props: Props) => {
   };
 
   return (
-    <div>
-      <div className="flex flex-col items-center mt-4">
-        <table className="border-collapse border w-3/6">
-          <thead>
-            <tr>
-              <th className="border p-2" colSpan={3}>
-                Detailed Comments to the Author/s :
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {questionTexts.map((text, index) => (
-              <tr key={index}>
-                <td className="border p-2">{`${index + 1}. ${text}`}</td>
-                <td className="border p-2">
-                  <input
-                    type="radio"
-                    id={`yes-${index}`}
-                    value="Yes"
-                    checked={selectedValues[index] === "Yes"}
-                    onChange={() => handleRadioChange(index, "Yes")}
-                  />
-                  <label htmlFor={`yes-${index}`}>Yes</label>
-                </td>
-                <td className="border p-2">
-                  <input
-                    type="radio"
-                    id={`no-${index}`}
-                    value="No"
-                    checked={selectedValues[index] === "No"}
-                    onChange={() => handleRadioChange(index, "No")}
-                  />
-                  <label htmlFor={`no-${index}`}>No</label>
-                </td>
+    <div className="mt-4 max-w-screen-lg mx-auto">
+      <div className="flex flex-col items-center">
+        <div className="overflow-x-auto">
+          <table className="border-collapse border w-full">
+            <thead>
+              <tr>
+                <th className="border p-2">
+                  Detailed Comments to the Author/s :
+                </th>
+                <th className="border p-2">Yes</th>
+                <th className="border p-2">No</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {questionTexts.map((text, index) => (
+                <tr key={index}>
+                  <td className="border p-2">{`${index + 1}. ${text}`}</td>
+                  <td className="border p-2">
+                    <input
+                      type="radio"
+                      id={`yes-${index}`}
+                      value="Yes"
+                      checked={selectedValues[index] === "Yes"}
+                      onChange={() => handleRadioChange(index, "Yes")}
+                    />
+                  </td>
+                  <td className="border p-2">
+                    <input
+                      type="radio"
+                      id={`no-${index}`}
+                      value="No"
+                      checked={selectedValues[index] === "No"}
+                      onChange={() => handleRadioChange(index, "No")}
+                    />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
       {errorText && (
-        <p className="flex items-center justify-end w-3/6 mx-auto my-6 text-red-500 mt-4">
+        <p className="flex items-center justify-end w-full mx-auto my-6 text-red-500 mt-4">
           {errorText}
         </p>
       )}
-      <div className="flex items-center justify-end w-3/6 mx-auto my-6">
+      <div className="flex items-center justify-end w-full mx-auto my-6">
         <button
           type="submit"
-          disabled={
-            selectedValues.filter((value) => value !== "").length !== 12
-          }
+          disabled={selectedValues.some((value) => value === "")}
           onClick={handleNext}
           className={`flex items-center rounded-lg p-2 text-white ${
-            selectedValues.filter((value) => value !== "").length !== 12
-              ? "bg-gray-400"
-              : "bg-indigo-600"
+            selectedValues.every((value) => value !== "")
+              ? "bg-indigo-600"
+              : "bg-gray-400"
           }`}
         >
           Next

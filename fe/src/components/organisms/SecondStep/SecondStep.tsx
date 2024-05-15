@@ -6,7 +6,9 @@ import { useNavigate } from "react-router-dom";
 type Props = {};
 
 const RadioOption = ({ id, name, value, label, checked, onChange }) => (
-  <label className="flex items-center space-x-2">
+  <label className="flex items-center space-x-2 cursor-pointer">
+    {" "}
+    {/* Cursor pointer eklendi */}
     <input
       type="radio"
       id={id}
@@ -15,6 +17,7 @@ const RadioOption = ({ id, name, value, label, checked, onChange }) => (
       checked={checked}
       onChange={onChange}
       className="form-radio"
+      style={{ cursor: "pointer" }}
     />
     <span>{label}</span>
   </label>
@@ -36,7 +39,6 @@ const SecondStep = (props: Props) => {
   );
 
   useEffect(() => {
-    // Kullanıcının bir sonraki adıma geçtiğinde görev durumundaki değerleri selectedValues'e atayın
     setSelectedValues(task.scores);
   }, []);
 
@@ -60,25 +62,23 @@ const SecondStep = (props: Props) => {
       setErrorText("All questions must be answered.");
     }
   };
-  console.log(selectedValues);
-
-  console.log(selectedValues.filter((value) => value !== "").length !== 4);
 
   return (
-    <div>
-      {data.map((question, index) => (
-        <div key={index} className="flex flex-col items-center mt-4">
-          <table className="border-collapse border w-3/6">
-            <thead>
-              <tr>
-                <th className="border p-2" colSpan={2}>
-                  {question}
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td className="border p-2">
+    <div className="mt-4 max-w-screen-lg mx-auto">
+      {/* Maksimum genişlik ayarı yapıldı */}
+      <table className="border-collapse border w-full">
+        <thead>
+          <tr>
+            <th className="border p-2">Questions</th>
+            <th className="border p-2">Response</th>
+          </tr>
+        </thead>
+        <tbody>
+          {data.map((question, index) => (
+            <tr key={index}>
+              <td className="border p-2">{question}</td>
+              <td className="border p-2">
+                <div className="flex flex-col space-y-2">
                   <RadioOption
                     id={`inadequate-${index}`}
                     name={`evaluation${index}`}
@@ -87,11 +87,6 @@ const SecondStep = (props: Props) => {
                     checked={selectedValues[index] === "1"}
                     onChange={() => handleRadioChange(index, "1")}
                   />
-                </td>
-                <td className="border p-2">Inadequate</td>
-              </tr>
-              <tr>
-                <td className="border p-2">
                   <RadioOption
                     id={`adequate-${index}`}
                     name={`evaluation${index}`}
@@ -100,11 +95,6 @@ const SecondStep = (props: Props) => {
                     checked={selectedValues[index] === "5"}
                     onChange={() => handleRadioChange(index, "5")}
                   />
-                </td>
-                <td className="border p-2">Adequate</td>
-              </tr>
-              <tr>
-                <td className="border p-2">
                   <RadioOption
                     id={`good-${index}`}
                     name={`evaluation${index}`}
@@ -113,11 +103,6 @@ const SecondStep = (props: Props) => {
                     checked={selectedValues[index] === "7"}
                     onChange={() => handleRadioChange(index, "7")}
                   />
-                </td>
-                <td className="border p-2">Good</td>
-              </tr>
-              <tr>
-                <td className="border p-2">
                   <RadioOption
                     id={`excellent-${index}`}
                     name={`evaluation${index}`}
@@ -126,19 +111,18 @@ const SecondStep = (props: Props) => {
                     checked={selectedValues[index] === "9"}
                     onChange={() => handleRadioChange(index, "9")}
                   />
-                </td>
-                <td className="border p-2">Excellent</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      ))}
+                </div>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
       {errorText && (
-        <p className="flex items-center justify-end w-3/6 mx-auto my-6 text-red-500 mt-4">
+        <p className="flex items-center justify-end w-full mx-auto my-6 text-red-500 mt-4">
           {errorText}
         </p>
       )}
-      <div className="flex items-center justify-end w-3/6 mx-auto my-6">
+      <div className="flex items-center justify-end w-full mx-auto my-6">
         <button
           type="submit"
           disabled={
@@ -147,8 +131,8 @@ const SecondStep = (props: Props) => {
           onClick={handleNext}
           className={`flex items-center rounded-lg p-2 text-white ${
             selectedValues.filter((value) => value !== undefined).length !== 4
-              ? "bg-gray-400"
-              : "bg-indigo-600"
+              ? "bg-gray-400 cursor-not-allowed"
+              : "bg-indigo-600 cursor-pointer"
           }`}
         >
           Next
