@@ -30,7 +30,7 @@ const Navbar = () => {
   }, [location.pathname]);
   return (
     <div>
-      <nav className="bg-gradient-to-r from-indigo-600 to-gray-800 mb-5">
+      <nav className="bg-gradient-to-r from-indigo-600 to-gray-800">
         <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
           <div className="relative flex h-16 items-center justify-between">
             <div className="flex flex-1 items-center justify-between sm:items-stretch sm:justify-between">

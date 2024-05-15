@@ -25,8 +25,8 @@ const InfoCard = (props: Props) => {
   ];
 
   return (
-    <div>
-      <ol className="flex items-center justify-center w-full p-3 space-x-2 text-sm font-medium text-center text-gray-500 bg-white border-gray-200 rounded-lg shadow-sm dark:text-gray-400 sm:text-base dark:bg-gray-800 dark:border-gray-700 sm:p-4 sm:space-x-4 rtl:space-x-reverse">
+    <div className="w-full ">
+      <ol className="flex flex-wrap gap-5 items-center justify-center w-full p-3 space-x-0  text-sm font-medium text-center text-gray-500 bg-white border-gray-200 rounded-lg shadow-sm sm:flex-nowrap sm:space-x-4 sm:space-y-0 sm:text-base dark:text-gray-400 dark:bg-gray-800 dark:border-gray-700 sm:p-4 rtl:space-x-reverse">
         {steps.map(({ step, label, path, icon }) => (
           <li
             key={step}
