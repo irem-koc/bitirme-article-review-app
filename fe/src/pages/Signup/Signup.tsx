@@ -69,7 +69,7 @@ const Signup = () => {
   };
 
   return (
-    <div className="flex flex-col justify-start items-center min-w-[380px] w-[500px] mx-auto">
+    <div className="flex flex-col justify-start items-center w-full max-w-md mx-auto px-4 sm:px-6 lg:px-8">
       {/* header */}
       <div className="header flex flex-col items-center justify-center mb-5">
         <Text content={"Merhaba,"} style={[""]} />
@@ -78,16 +78,14 @@ const Signup = () => {
           style={["text-sm"]}
         />
       </div>
-      <div className="flex w-full justify-center items-end">
+      <div className="flex w-full justify-center items-end ">
         <Link
           to="/login"
           className={`${
             locate.pathname !== "/signup"
               ? "border"
               : "text-black bg-gray-100 border-b"
-          } flex justify-center items-center w-full rounded-xs px-3 py-2 text-sm font-medium ${
-            window.innerWidth <= 640 ? "hidden" : "block"
-          }`}
+          } flex justify-center items-center w-full rounded-xs px-3 py-2 text-sm font-medium block`}
           aria-current="page"
         >
           Giriş Yap
@@ -98,9 +96,7 @@ const Signup = () => {
             locate.pathname !== "/login"
               ? "border border-b-0"
               : "text-gray-300 border-b"
-          } flex  text-indigo-600 justify-center items-center w-full rounded-xs px-3 py-2 text-sm font-medium ${
-            window.innerWidth <= 640 ? "hidden" : "block"
-          }`}
+          } flex text-indigo-600 justify-center items-center w-full rounded-xs px-3 py-2 text-sm font-medium block`}
           aria-current="page"
         >
           Üye Ol
@@ -109,9 +105,9 @@ const Signup = () => {
       {/* Signup form */}
       <form
         onSubmit={(e) => e.preventDefault()}
-        className="border border-t-0 w-full p-10"
+        className="border border-t-0 w-full p-6 sm:p-10"
       >
-        <div className="mb-2">
+        <div className="mb-4">
           <Label
             content={"Ad"}
             htmlFor={"firstName"}
@@ -126,7 +122,7 @@ const Signup = () => {
             className="border w-full rounded-sm flex-shrink-0 bg-transparent p-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
           />
         </div>
-        <div className="mb-2">
+        <div className="mb-4">
           <Label
             content={"Soyad"}
             htmlFor={"lastName"}
@@ -141,7 +137,7 @@ const Signup = () => {
             className="border w-full rounded-sm flex-shrink-0 bg-transparent p-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
           />
         </div>
-        <div className="mb-2">
+        <div className="mb-4">
           <Label
             content={"E-Posta"}
             htmlFor={"email"}
@@ -156,7 +152,7 @@ const Signup = () => {
             className="border w-full rounded-sm flex-shrink-0 bg-transparent p-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
           />
         </div>
-        <div className="mb-2">
+        <div className="mb-4">
           <Label
             content={"Şifre"}
             htmlFor={"password"}
@@ -175,20 +171,20 @@ const Signup = () => {
             rakam içermelidir.
           </p> */}
         </div>
-        <div className="flex items-center flex-shrink-0 gap-4 my-2">
+        <div className="flex items-center gap-4 my-4">
           <input
             type="checkbox"
             name="kvkk"
             id="kvkk"
             onChange={() => setIsKvkkChecked(!isKvkkChecked)}
-            className="w-4 border-4 border-gray-900"
+            className="w-4 h-4 border-gray-900"
           />
           <div className="text-xs text-gray-900">
             Kişisel verilerimin işlenmesine yönelik aydınlatma metnini okudum ve
             anladım
           </div>
         </div>
-        {errorText && <p className="error">{errorText}</p>}
+        {errorText && <p className="text-red-500 text-xs">{errorText}</p>}
         <div>
           <button
             type="submit"
