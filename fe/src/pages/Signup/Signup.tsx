@@ -112,7 +112,11 @@ const Signup = () => {
         className="border border-t-0 w-full p-10"
       >
         <div className="mb-2">
-          <Label content={"Ad"} htmlFor={"firstName"} />
+          <Label
+            content={"Ad"}
+            htmlFor={"firstName"}
+            style={["text-xs font-medium leading-6 text-gray-900"]}
+          />
           <input
             onChange={handleChange}
             value={user.firstName}
@@ -123,7 +127,11 @@ const Signup = () => {
           />
         </div>
         <div className="mb-2">
-          <Label content={"Soyad"} htmlFor={"lastName"} />
+          <Label
+            content={"Soyad"}
+            htmlFor={"lastName"}
+            style={["text-xs font-medium leading-6 text-gray-900"]}
+          />
           <input
             onChange={handleChange}
             value={user.lastName}
@@ -134,7 +142,11 @@ const Signup = () => {
           />
         </div>
         <div className="mb-2">
-          <Label content={"E-Posta"} htmlFor={"email"} />
+          <Label
+            content={"E-Posta"}
+            htmlFor={"email"}
+            style={["text-xs font-medium leading-6 text-gray-900"]}
+          />
           <input
             onChange={handleChange}
             value={user.email}
@@ -145,7 +157,11 @@ const Signup = () => {
           />
         </div>
         <div className="mb-2">
-          <Label content={"Şifre"} htmlFor={"password"} />
+          <Label
+            content={"Şifre"}
+            htmlFor={"password"}
+            style={["text-xs font-medium leading-6 text-gray-900"]}
+          />
           <input
             onChange={handleChange}
             value={user.password}
@@ -154,12 +170,12 @@ const Signup = () => {
             name="password"
             className="border w-full rounded-sm bg-transparent p-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 flex-shrink-0"
           />
-          <p className="text-sm text-gray-600 mb-2">
+          {/* <p className="text-sm text-gray-600 mb-2">
             Şifreniz en az 10 karakter olmalı. 1 büyük harf, 1 küçük harf ve
             rakam içermelidir.
-          </p>
+          </p> */}
         </div>
-        <div className="flex flex-shrink-0 gap-4 mb-2">
+        <div className="flex items-center flex-shrink-0 gap-4 my-2">
           <input
             type="checkbox"
             name="kvkk"

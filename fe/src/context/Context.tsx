@@ -57,7 +57,7 @@ const ContextProvider = ({ children }: Props) => {
     detailedComments: [],
     review: "",
   });
-
+  const [tasks, setTasks] = useState<TaskType[]>([]);
   useEffect(() => {
     const jwt = localStorage.getItem("jwt");
     const loggedIn = jwt ? true : false;
@@ -77,7 +77,7 @@ const ContextProvider = ({ children }: Props) => {
     }
   }, []);
 
-  const values = { userr, setUserr, task, setTask };
+  const values = { userr, setUserr, task, setTask, tasks, setTasks };
 
   return <Context.Provider value={values}>{children}</Context.Provider>;
 };

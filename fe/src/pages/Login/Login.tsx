@@ -12,7 +12,7 @@ const Login = (props: Props) => {
   const {} = props;
   const { setUserr, userr } = useContext(Context);
 
-  const [user, setUser] = useState({ email: "", password: "" });
+  const [user, setUser] = useState({ ...userr, email: "", password: "" });
   const [errorText, setErrorText] = useState<string | undefined>();
   useEffect(() => {
     if (localStorage.getItem("jwt")) {
@@ -34,23 +34,38 @@ const Login = (props: Props) => {
       if (localStorage.getItem("jwt")) {
         localStorage.removeItem("jwt");
       }
+      console.log(user, "is user");
+
       const res = await login(user);
 
-      localStorage.setItem("jwt", res);
-      setUserr((prevUser) => ({
-        ...prevUser,
-        isUserLoggedIn: true,
-        userData: {
-          firstName: userr.userData.firstName,
-          lastName: userr.userData.lastName,
-          email: user.email,
-        },
-      }));
       if (res.error) {
         if (res.error.status === 422) {
           setErrorText("Kullanıcı kimliği uyuşmuyor.");
         }
       } else {
+        localStorage.setItem("jwt", res);
+
+        // Kullanıcı verilerini güncelle
+        const userData = {
+          firstName: res.firstName, // login yanıtından alındığını varsayıyoruz
+          lastName: res.lastName, // login yanıtından alındığını varsayıyoruz
+          email: user.email,
+        };
+
+        setUserr((prevUser) => ({
+          ...prevUser,
+          isUserLoggedIn: true,
+          userData: userData,
+        }));
+
+        localStorage.setItem(
+          "userdata",
+          JSON.stringify({
+            isUserLoggedIn: true,
+            userData: userData,
+          })
+        );
+
         navigate("/");
       }
     } catch (error) {

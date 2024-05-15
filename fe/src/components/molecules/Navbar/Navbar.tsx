@@ -11,7 +11,6 @@ const Navbar = () => {
   const { userr, setUserr } = useContext(Context);
   const [errorText, setErrorText] = useState();
 
-  const [user, setUser] = useState();
   const handleLogin = async () => {
     try {
       const res = await getUserData();
@@ -24,6 +23,7 @@ const Navbar = () => {
     localStorage.setItem("jwt", "");
     localStorage.setItem("userdata", "");
     setUserr({ ...userr, isUserLoggedIn: false });
+    console.log("Logout function called");
   };
   useEffect(() => {
     handleLogin();
@@ -87,17 +87,19 @@ const Navbar = () => {
                 </div>
               </div>
               <div className="mx-4 flex items-center justify-center">
-                {userr.userData.firstName ? (
+                {userr.userData.firstName &&
+                localStorage.getItem("userdata") ? (
                   <div className="flex gap-3">
                     <div className="flex items-center gap-1">
                       <span>
                         <CiUser fill="white" stroke="1.2" />
                       </span>
                       <p className="text-white">
-                        Hello, {userr?.userData?.firstName}
+                        Hello, {userr.userData?.firstName}
                       </p>
                     </div>
                     <Link
+                      onClick={() => handleLogout()}
                       to="/login"
                       className={`${
                         location.pathname === "/login" ||
@@ -110,7 +112,7 @@ const Navbar = () => {
                   }`}
                       aria-current="page"
                     >
-                      <span onClick={() => handleLogout()} className="pr-2">
+                      <span className="pr-2">
                         <CiLogout stroke="1.2" />
                       </span>
                       Logout

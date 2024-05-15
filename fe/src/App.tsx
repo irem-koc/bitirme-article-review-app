@@ -10,21 +10,23 @@ function App() {
   useEffect(() => {
     if (localStorage.getItem("jwt") && !userr.isUserLoggedIn) {
       verifySession().then((res) => {
+        console.log(res.status);
+
         if (res.status === "SUCCESS") {
           navigate("/");
-        } else if (res.status === "FAILED") {
+        } else {
           navigate("/login");
           localStorage.setItem("jwt", "");
           localStorage.setItem("userdata", "");
         }
       });
     }
-  }, [userr.isUserLoggedIn, navigate]);
+  }, [userr, navigate]);
   return (
-    <h1 className="">
+    <div className="">
       <Navbar />
       <Outlet />
-    </h1>
+    </div>
   );
 }
 export default App;
