@@ -20,8 +20,13 @@ const FirstStep = (props: Props) => {
   }, [userr.isUserLoggedIn, navigate]);
 
   useEffect(() => {
-    setIsDisabled(!task.title || task.title.trim().length === 0);
-  }, [task.title]);
+    setIsDisabled(
+      !task.title ||
+        task.title.trim().length === 0 ||
+        !task.articleId ||
+        task.articleId.trim().length === 0
+    );
+  }, [task.title, task.articleId]);
 
   const handleChange = (e) => {
     setErrorText(undefined);
@@ -31,7 +36,12 @@ const FirstStep = (props: Props) => {
 
   const handleNext = (e) => {
     e.preventDefault();
-    if (task.title && task.title.trim().length > 0) {
+    if (
+      task.title &&
+      task.title.trim().length > 0 &&
+      task.articleId &&
+      task.articleId.trim().length > 0
+    ) {
       navigate("/review/2");
     } else {
       setErrorText("Title cannot be empty!");
@@ -47,7 +57,7 @@ const FirstStep = (props: Props) => {
             htmlFor="articleId"
             style={["text-md font-semibold leading-6 text-gray-900"]}
           />
-          <div className="mt-2 rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
+          <div className="my-4 rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
             <input
               onChange={handleChange}
               value={task.articleId}
