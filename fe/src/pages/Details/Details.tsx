@@ -8,6 +8,8 @@ type Props = {};
 const Details = (props: Props) => {
   const { tasks } = useContext(Context); // Assuming tasks are already filtered in context
   const [allTasks, setAllTasks] = useState<any[]>([]);
+  const [filteredTasks, setFilteredTasks] = useState<any[]>([]);
+  const [filter, setFilter] = useState<string>("");
   const location = useLocation();
   const navigate = useNavigate();
   const [errorText, setErrorText] = useState<string | undefined>();
@@ -16,6 +18,7 @@ const Details = (props: Props) => {
     try {
       const res = await getAllAllReviews();
       setAllTasks(res);
+      setFilteredTasks(res);
     } catch (error) {
       navigate("/login");
       setErrorText(error.message);
@@ -34,9 +37,9 @@ const Details = (props: Props) => {
   };
 
   const calculateAverageWeightPerArticle = () => {
-    if (allTasks && allTasks.length > 0) {
+    if (filteredTasks && filteredTasks.length > 0) {
       const articleWeights = {};
-      for (const task of allTasks) {
+      for (const task of filteredTasks) {
         const key = task.articleId;
         const weight = calculateTotalWeight(task.scores);
         if (!articleWeights[key]) {
@@ -55,11 +58,32 @@ const Details = (props: Props) => {
     return {};
   };
 
+  const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    setFilter(value);
+    const filtered = allTasks.filter((task) =>
+      task.articleId.toLowerCase().includes(value.toLowerCase())
+    );
+    setFilteredTasks(filtered);
+  };
+
   return (
     <div className="p-7">
       {errorText && <p className="error">{errorText}</p>}
-      <span>{allTasks.length} adet inceleme girildi</span>
-      <div className="overflow-x-auto">
+      <div className="mb-4">
+        <label htmlFor="filter" className="mr-2">
+          Article Filtrele:
+        </label>
+        <input
+          type="text"
+          id="filter"
+          value={filter}
+          onChange={handleFilterChange}
+          className="border border-gray-300 rounded px-2 py-1"
+        />
+      </div>
+      <span>{filteredTasks.length} adet inceleme bulundu</span>
+      <div className="overflow-x-auto mt-4">
         <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 divide-y divide-gray-200 sm:divide-y-0 sm:table">
           <thead className="text-xs text-gray-700 bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
@@ -74,11 +98,11 @@ const Details = (props: Props) => {
             </tr>
           </thead>
           <tbody>
-            {allTasks.length > 0 &&
+            {filteredTasks.length > 0 &&
               Object.entries(calculateAverageWeightPerArticle()).map(
                 ([articleId, averageWeight]) => (
                   <React.Fragment key={articleId}>
-                    {allTasks
+                    {filteredTasks
                       .filter((task) => task.articleId === articleId)
                       .map((task, index) => (
                         <tr key={task.id}>
@@ -123,14 +147,6 @@ const Details = (props: Props) => {
               )}
           </tbody>
         </table>
-        {/* {allTasks.length > 0 && (
-          <p>
-            Toplam Ağırlık:{" "}
-            {Object.values(calculateAverageWeightPerArticle())
-              .reduce((a, b) => a + b)
-              .toFixed(2)}
-          </p>
-        )} */}
       </div>
     </div>
   );
