@@ -63,7 +63,7 @@ const Details = (props: Props) => {
         <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 divide-y divide-gray-200 sm:divide-y-0 sm:table">
           <thead className="text-xs text-gray-700 bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
-              <th className="px-6 py-3 sm:w-1/6">Makale Kimliği</th>
+              <th className="px-6 py-3 sm:w-1/6">Article</th>
               <th className="px-6 py-3 sm:w-1/6">Kullanıcı</th>
               <th className="px-6 py-3 sm:w-1/6">Skor A (ağırlık * %35)</th>
               <th className="px-6 py-3 sm:w-1/6">Skor B (ağırlık * %25)</th>
@@ -83,7 +83,7 @@ const Details = (props: Props) => {
                       .map((task, index) => (
                         <tr key={task.id}>
                           <td className="px-6 py-4 sm:w-1/6">
-                            Article Id: {articleId}
+                            Id: {articleId}
                           </td>
                           <td className="px-6 py-4 sm:w-1/6">
                             {task.user.firstName}
