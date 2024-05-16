@@ -78,21 +78,13 @@ const Details = (props: Props) => {
               Object.entries(calculateAverageWeightPerArticle()).map(
                 ([articleId, averageWeight]) => (
                   <React.Fragment key={articleId}>
-                    <tr>
-                      <th className="px-6 py-4 sm:w-1/6">
-                        Article Id: {articleId}
-                      </th>
-                      <td className="px-6 py-4 sm:w-1/6" colSpan={5}></td>
-                      <td className="px-6 py-4 sm:w-1/6"></td>
-                      <td className="px-6 py-4 sm:w-1/6">
-                        {averageWeight.toFixed(2)}
-                      </td>
-                    </tr>
                     {allTasks
                       .filter((task) => task.articleId === articleId)
                       .map((task, index) => (
                         <tr key={task.id}>
-                          <td className="px-6 py-4 sm:w-1/6"></td>
+                          <td className="px-6 py-4 sm:w-1/6">
+                            Article Id: {articleId}
+                          </td>
                           <td className="px-6 py-4 sm:w-1/6">
                             {task.user.firstName}
                           </td>
@@ -116,6 +108,16 @@ const Details = (props: Props) => {
                           </td>
                         </tr>
                       ))}
+                    <tr className="border-t">
+                      <th className="px-6 py-4 sm:w-1/6">
+                        Article Id: {articleId}
+                      </th>
+                      <td className="px-6 py-4 sm:w-1/6" colSpan={5}></td>
+                      <td className="px-6 py-4 sm:w-1/6"></td>
+                      <td className="px-6 py-4 sm:w-1/6">
+                        {averageWeight.toFixed(2)}
+                      </td>
+                    </tr>
                   </React.Fragment>
                 )
               )}
