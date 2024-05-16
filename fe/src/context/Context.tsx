@@ -16,6 +16,7 @@ type TaskType = {
   overallAssessment: string;
   detailedComments: string[];
   articleId: string;
+  userId: string;
 };
 
 type ContextType = {
@@ -38,6 +39,7 @@ export const Context = createContext<ContextType>({
     overallAssessment: "",
     detailedComments: [],
     articleId: "",
+    userId: "",
   },
   setTask: () => {},
 });
@@ -59,6 +61,7 @@ const ContextProvider = ({ children }: Props) => {
     detailedComments: [],
     review: "",
     articleId: "",
+    userId: "",
   });
   const [tasks, setTasks] = useState<TaskType[]>([]);
   useEffect(() => {

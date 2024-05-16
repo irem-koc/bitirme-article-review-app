@@ -1,7 +1,10 @@
 package dev.irem.reviewapp.webApi.controllers;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -23,6 +26,7 @@ import dev.irem.reviewapp.business.responses.DeleteTaskResponse;
 import dev.irem.reviewapp.business.responses.GetAllTaskResponse;
 import dev.irem.reviewapp.business.responses.PostTaskResponse;
 import dev.irem.reviewapp.business.responses.UpdateTaskResponse;
+import dev.irem.reviewapp.entities.concretes.Task;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
@@ -64,5 +68,13 @@ public class TasksController {
     public ResponseEntity<GetAllTaskResponse> getAllTask(@RequestHeader("Authorization") String bearerToken,
             @RequestParam String requestId) {
         return ResponseEntity.ok(this.taskService.getAllTask(bearerToken, requestId));
+    }
+
+    @GetMapping("/tasks")
+    // @PreAuthorize("hasAuthority('visitor:read')")
+    @CrossOrigin(exposedHeaders = { "Access-Control-Allow-Origin", "Access-Control-Allow-Credentials" })
+    public ResponseEntity<List<Task>> getAllTasks() {
+        List<Task> tasks = taskService.getAllTasks();
+        return new ResponseEntity<>(tasks, HttpStatus.OK);
     }
 }

@@ -1,5 +1,5 @@
 import { Context } from "@context/Context";
-import getAllReviews from "@services/getAllReviews";
+import getAllAllReviews from "@services/getAllAllReviews";
 import { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -7,18 +7,21 @@ type Props = {};
 
 const Details = (props: Props) => {
   const { tasks, setTasks } = useContext(Context);
+  const [alllTasks, setAlllTasks] = useState();
   const location = useLocation();
   const navigate = useNavigate();
   const [errorText, setErrorText] = useState<string | undefined>();
   const handleLogin = async () => {
     try {
-      const res = await getAllReviews();
-      setTasks(res);
+      // const res = await getAllReviews();
+      const another = await getAllAllReviews();
+      setAlllTasks(another);
     } catch (error) {
       navigate("/login");
       setErrorText(error.message);
     }
   };
+  console.log(alllTasks, " alllTasks is thatt");
 
   useEffect(() => {
     handleLogin();
@@ -43,7 +46,7 @@ const Details = (props: Props) => {
 
   return (
     <div>
-      {errorText ? <p className="error">{errorText}</p> : null}
+      {/* {errorText ? <p className="error">{errorText}</p> : null}
       <span>{tasks?.length} adet review girdiniz.</span>
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
         <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -116,7 +119,7 @@ const Details = (props: Props) => {
           </tbody>
         </table>
         <p>Total Weight: {calculateAverageWeight()}</p>
-      </div>
+      </div> */}
     </div>
   );
 };

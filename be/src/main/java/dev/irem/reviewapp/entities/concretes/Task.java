@@ -2,8 +2,6 @@ package dev.irem.reviewapp.entities.concretes;
 
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -48,7 +46,6 @@ public class Task {
     private String articleId;
 
     @ManyToOne
-    @JsonIgnore
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 }

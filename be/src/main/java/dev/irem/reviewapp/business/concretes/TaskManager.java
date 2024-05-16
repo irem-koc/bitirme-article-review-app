@@ -142,4 +142,9 @@ public class TaskManager implements TaskService {
 
                 return updateTaskResponse;
         }
+
+        @Override
+        public List<Task> getAllTasks() {
+                return taskRepository.findAll();
+        }
 }
