@@ -4,10 +4,11 @@ import { useContext, useEffect, useState } from "react";
 import { CiLogin, CiLogout, CiUser } from "react-icons/ci";
 import { HiOutlineHome } from "react-icons/hi";
 import { TbListDetails } from "react-icons/tb";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 const Navbar = () => {
   // const { data: userData } = useGetUserDataQuery();
   const location = useLocation();
+  const navigate = useNavigate();
   const { userr, setUserr } = useContext(Context);
   const [errorText, setErrorText] = useState();
 
@@ -24,6 +25,7 @@ const Navbar = () => {
     localStorage.setItem("userdata", "");
     setUserr({ ...userr, isUserLoggedIn: false });
     console.log("Logout function called");
+    // navigate("./logout");
   };
   useEffect(() => {
     handleLogin();
@@ -100,7 +102,7 @@ const Navbar = () => {
                     </div>
                     <Link
                       onClick={() => handleLogout()}
-                      to="/login"
+                      to="/logout"
                       className={`${
                         location.pathname === "/login" ||
                         location.pathname === "/signup"

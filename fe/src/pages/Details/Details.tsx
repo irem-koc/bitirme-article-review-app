@@ -70,31 +70,48 @@ const Details = (props: Props) => {
   return (
     <div className="p-7">
       {errorText && <p className="error">{errorText}</p>}
-      <div className="mb-4">
+      <div className="mb-4 flex items-center">
         <label htmlFor="filter" className="mr-2">
-          Article Filtrele:
+          Filter article:
         </label>
-        <input
-          type="text"
-          id="filter"
-          value={filter}
-          onChange={handleFilterChange}
-          className="border border-gray-300 rounded px-2 py-1"
-        />
+        <div className="relative">
+          <input
+            type="text"
+            id="filter"
+            value={filter}
+            onChange={handleFilterChange}
+            placeholder="Makale ID girin..."
+            className="block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500 placeholder-gray-400 text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 sm:text-sm"
+          />
+          <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+            <svg
+              className="h-5 w-5 text-gray-400"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+              aria-hidden="true"
+            >
+              <path
+                fillRule="evenodd"
+                d="M13.293 14.707a1 1 0 01-1.414 1.414l-3-3a1 1 0 111.414-1.414l3 3a1 1 0 000 0zM11 6a5 5 0 100 10 5 5 0 000-10z"
+                clipRule="evenodd"
+              />
+            </svg>
+          </div>
+        </div>
       </div>
-      <span>{filteredTasks.length} adet inceleme bulundu</span>
       <div className="overflow-x-auto mt-4">
-        <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 divide-y divide-gray-200 sm:divide-y-0 sm:table">
+        <table className="w-full border text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 divide-y divide-gray-200 sm:divide-y-0 sm:table">
           <thead className="text-xs text-gray-700 bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
-              <th className="px-6 py-3 sm:w-1/6">Article</th>
-              <th className="px-6 py-3 sm:w-1/6">Kullanıcı</th>
-              <th className="px-6 py-3 sm:w-1/6">Skor A (ağırlık * %35)</th>
-              <th className="px-6 py-3 sm:w-1/6">Skor B (ağırlık * %25)</th>
-              <th className="px-6 py-3 sm:w-1/6">Skor C (ağırlık * %20)</th>
-              <th className="px-6 py-3 sm:w-1/6">Skor D (ağırlık * %20)</th>
-              <th className="px-6 py-3 sm:w-1/6">Ağırlık</th>
-              <th className="px-6 py-3 sm:w-1/6">Ortalama Ağırlık</th>
+              <th className="px-3 py-3 sm:w-1/6">Article</th>
+              <th className="px-3 py-3 sm:w-1/6">Kullanıcı</th>
+              <th className="px-3 py-3 sm:w-1/6">Skor A (ağırlık * %35)</th>
+              <th className="px-3 py-3 sm:w-1/6">Skor B (ağırlık * %25)</th>
+              <th className="px-3 py-3 sm:w-1/6">Skor C (ağırlık * %20)</th>
+              <th className="px-3 py-3 sm:w-1/6">Skor D (ağırlık * %20)</th>
+              <th className="px-3 py-3 sm:w-1/6">Ağırlık</th>
+              <th className="px-3 py-3 sm:w-1/6">Ortalama Ağırlık</th>
             </tr>
           </thead>
           <tbody>
@@ -105,15 +122,18 @@ const Details = (props: Props) => {
                     {filteredTasks
                       .filter((task) => task.articleId === articleId)
                       .map((task, index) => (
-                        <tr key={task.id}>
-                          <td className="px-6 py-4 sm:w-1/6">
+                        <tr
+                          className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800"
+                          key={task.id}
+                        >
+                          <td className="px-3 py-3 sm:w-1/6">
                             Id: {articleId}
                           </td>
-                          <td className="px-6 py-4 sm:w-1/6">
+                          <td className="px-3 py-3 sm:w-1/6">
                             {task.user.firstName}
                           </td>
                           {task.scores.slice(0, 4).map((score, index) => (
-                            <td key={index} className="px-6 py-4 sm:w-1/6">
+                            <td key={index} className="px-3 py-3 sm:w-1/6">
                               {score}
                             </td>
                           ))}
@@ -122,23 +142,24 @@ const Details = (props: Props) => {
                             .map((_, index) => (
                               <td
                                 key={index + task.scores.length}
-                                className="px-6 py-4 sm:w-1/6"
+                                className="px-3 py-3 sm:w-1/6"
                               >
                                 -
                               </td>
                             ))}
-                          <td className="px-6 py-4 sm:w-1/6">
+                          <td className="px-3 py-3 sm:w-1/6">
                             {calculateTotalWeight(task.scores).toFixed(2)}
                           </td>
+                          <td className="px-3 py-3 sm:w-1/6"></td>
                         </tr>
                       ))}
-                    <tr className="border-t">
-                      <th className="px-6 py-4 sm:w-1/6">
+                    <tr className="border-t odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800">
+                      <th className="px-3 py-3 sm:w-1/6">
                         Article Id: {articleId}
                       </th>
-                      <td className="px-6 py-4 sm:w-1/6" colSpan={5}></td>
-                      <td className="px-6 py-4 sm:w-1/6"></td>
-                      <td className="px-6 py-4 sm:w-1/6">
+                      <td className="px-3 py-3 sm:w-1/6" colSpan={5}></td>
+                      <td className="px-3 py-3 sm:w-1/6"></td>
+                      <td className="px-3 py-3 sm:w-1/6">
                         {averageWeight.toFixed(2)}
                       </td>
                     </tr>

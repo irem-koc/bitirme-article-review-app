@@ -4,12 +4,12 @@ import { useNavigate } from "react-router-dom";
 
 type Props = {};
 
-const Success = (props: Props) => {
+const Welcome = (props: Props) => {
   const navigate = useNavigate();
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      navigate("/details");
+      navigate("/");
     }, 3000);
 
     return () => clearTimeout(timer);
@@ -20,14 +20,14 @@ const Success = (props: Props) => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
-      className="flex items-start justify-center mt-4 h-screen"
+      className="flex items-start justify-center h-screen"
     >
-      <div className="text-center">
+      <div className="text-center p-4">
         <img
-          typeof="gif"
-          src="https://media.tenor.com/oOKAO1IJ5X8AAAAi/thanks-thanks-gifs.gif"
+          src="https://www.jackson.stark.k12.oh.us/cms/lib/OH02206107/Centricity/Domain/595/blobid2.gif"
           alt="Thanks Gif"
-          className="mb-4"
+          className="mb-4 mx-auto"
+          style={{ maxWidth: "100%", height: "auto", maxHeight: "400px" }}
         />
         <h1 className="text-2xl font-bold text-indigo-600">Congratulations!</h1>
         <p className="text-lg">Your review has been submitted successfully.</p>
@@ -36,4 +36,4 @@ const Success = (props: Props) => {
   );
 };
 
-export default Success;
+export default Welcome;

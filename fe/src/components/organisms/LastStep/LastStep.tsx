@@ -9,7 +9,7 @@ type Props = {};
 
 const LastStep = (props: Props) => {
   const {} = props;
-  const { task, setTask } = useContext(Context);
+  const { task, setTask, tasks, setTasks } = useContext(Context);
   const [errorText, setErrorText] = useState<string | undefined>();
   const navigate = useNavigate();
 
@@ -18,6 +18,7 @@ const LastStep = (props: Props) => {
       await addReview(task);
       navigate("/success");
       setTask({});
+      setTasks([...tasks, task]);
     } catch (err) {
       console.log("*********");
       console.log(task);

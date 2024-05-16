@@ -44,7 +44,7 @@ const SecondStep = (props: Props) => {
 
   useEffect(() => {
     const allAnswered =
-      selectedValues.filter((value) => value !== undefined).length === 4;
+      selectedValues?.filter((value) => value !== undefined).length === 4;
     setErrorText(allAnswered ? undefined : "All questions must be answered.");
   }, [selectedValues]);
 
@@ -56,7 +56,7 @@ const SecondStep = (props: Props) => {
   };
 
   const handleNext = () => {
-    if (selectedValues.filter((value) => value !== "").length === 4) {
+    if (selectedValues?.filter((value) => value !== "").length === 4) {
       navigate("/review/3");
     } else {
       setErrorText("All questions must be answered.");
@@ -130,7 +130,7 @@ const SecondStep = (props: Props) => {
           }
           onClick={handleNext}
           className={`flex items-center rounded-lg p-2 text-white ${
-            selectedValues.filter((value) => value !== undefined).length !== 4
+            selectedValues?.filter((value) => value !== undefined).length !== 4
               ? "bg-gray-400 cursor-not-allowed"
               : "bg-indigo-600 cursor-pointer"
           }`}

@@ -66,7 +66,7 @@ const Login = (props: Props) => {
           })
         );
 
-        navigate("/");
+        navigate("/welcome");
       }
     } catch (error) {
       setErrorText(error.message);
@@ -77,7 +77,7 @@ const Login = (props: Props) => {
 
   const location = useLocation();
   return (
-    <div className="flex flex-col justify-start items-center w-full max-w-md mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="flex flex-col justify-start items-center w-full max-w-md mx-auto  mt-4 px-4 sm:px-6 lg:px-8">
       {/* header */}
       <div className="header flex flex-col items-center justify-center mb-5">
         <Text content={"Merhaba,"} style={[]} />

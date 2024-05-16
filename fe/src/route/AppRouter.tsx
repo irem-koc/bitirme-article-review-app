@@ -1,16 +1,18 @@
 import Home from "@pages/Home/Home";
 
+import FirstStep from "@organisms/FirstStep/FirstStep";
 import FourthStep from "@organisms/FourthStep/FourthStep";
 import LastStep from "@organisms/LastStep/LastStep";
 import SecondStep from "@organisms/SecondStep/SecondStep";
 import ThirdStep from "@organisms/ThirdStep/ThirdStep";
 import Details from "@pages/Details/Details";
+import Login from "@pages/Login/Login";
+import Logout from "@pages/Logout/Logout";
+import Signup from "@pages/Signup/Signup";
+import Success from "@pages/Success/Success";
+import Welcome from "@pages/Welcome/Welcome";
 import { createBrowserRouter } from "react-router-dom";
 import App from "../App";
-import FirstStep from "@organisms/FirstStep/FirstStep";
-import Success from "@pages/Success/Success";
-import Signup from "@pages/Signup/Signup";
-import Login from "@pages/Login/Login";
 
 const router = createBrowserRouter([
   {
@@ -51,6 +53,14 @@ const router = createBrowserRouter([
       {
         path: "/success",
         element: <Success />,
+      },
+      {
+        path: "/welcome",
+        element: <Welcome />,
+      },
+      {
+        path: "/logout",
+        element: <Logout />,
       },
       {
         path: "/login",
