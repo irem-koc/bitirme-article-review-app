@@ -1,27 +1,26 @@
 import { Context } from "@context/Context";
 import getAllAllReviews from "@services/getAllAllReviews";
-import { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 type Props = {};
 
 const Details = (props: Props) => {
-  const { tasks, setTasks } = useContext(Context);
-  const [alllTasks, setAlllTasks] = useState();
+  const { tasks } = useContext(Context); // Assuming tasks are already filtered in context
+  const [allTasks, setAllTasks] = useState<any[]>([]);
   const location = useLocation();
   const navigate = useNavigate();
   const [errorText, setErrorText] = useState<string | undefined>();
+
   const handleLogin = async () => {
     try {
-      // const res = await getAllReviews();
-      const another = await getAllAllReviews();
-      setAlllTasks(another);
+      const res = await getAllAllReviews();
+      setAllTasks(res);
     } catch (error) {
       navigate("/login");
       setErrorText(error.message);
     }
   };
-  console.log(alllTasks, " alllTasks is thatt");
 
   useEffect(() => {
     handleLogin();
@@ -34,92 +33,103 @@ const Details = (props: Props) => {
     }, 0);
   };
 
-  const calculateAverageWeight = () => {
-    if (tasks && tasks.length > 0) {
-      const totalWeight = tasks.reduce((total, task) => {
-        return total + calculateTotalWeight(task.scores);
-      }, 0);
-      return (totalWeight / tasks.length).toFixed(2);
+  const calculateAverageWeightPerArticle = () => {
+    if (allTasks && allTasks.length > 0) {
+      const articleWeights = {};
+      for (const task of allTasks) {
+        const key = task.articleId;
+        const weight = calculateTotalWeight(task.scores);
+        if (!articleWeights[key]) {
+          articleWeights[key] = [weight];
+        } else {
+          articleWeights[key].push(weight);
+        }
+      }
+      for (const articleId in articleWeights) {
+        articleWeights[articleId] =
+          articleWeights[articleId].reduce((a, b) => a + b) /
+          articleWeights[articleId].length;
+      }
+      return articleWeights;
     }
-    return "0.00";
+    return {};
   };
 
   return (
-    <div>
-      {/* {errorText ? <p className="error">{errorText}</p> : null}
-      <span>{tasks?.length} adet review girdiniz.</span>
-      <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-        <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+    <div className="p-7">
+      {errorText && <p className="error">{errorText}</p>}
+      <span>{allTasks.length} adet inceleme girildi</span>
+      <div className="overflow-x-auto">
+        <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 divide-y divide-gray-200 sm:divide-y-0 sm:table">
           <thead className="text-xs text-gray-700 bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
-              <th scope="col" className="px-6 py-3">
-                Id
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Title
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Score A (weight * %35)
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Score B (weight * %25)
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Score C (weight * %20)
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Score D (weight * %20)
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Weight
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Action
-              </th>
+              <th className="px-6 py-3 sm:w-1/6">Makale Kimliği</th>
+              <th className="px-6 py-3 sm:w-1/6">Kullanıcı</th>
+              <th className="px-6 py-3 sm:w-1/6">Skor A (ağırlık * %35)</th>
+              <th className="px-6 py-3 sm:w-1/6">Skor B (ağırlık * %25)</th>
+              <th className="px-6 py-3 sm:w-1/6">Skor C (ağırlık * %20)</th>
+              <th className="px-6 py-3 sm:w-1/6">Skor D (ağırlık * %20)</th>
+              <th className="px-6 py-3 sm:w-1/6">Ağırlık</th>
+              <th className="px-6 py-3 sm:w-1/6">Ortalama Ağırlık</th>
             </tr>
           </thead>
           <tbody>
-            {tasks?.map((task) => (
-              <tr
-                key={task.id}
-                className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700"
-              >
-                <th
-                  scope="row"
-                  className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                >
-                  {task.id}
-                </th>
-                <td className="px-6 py-4">{task.title}</td>
-                {task.scores.slice(0, 4).map((score, index) => (
-                  <td key={index} className="px-6 py-4">
-                    {score}
-                  </td>
-                ))}
-                {Array(4 - task.scores.length)
-                  .fill("")
-                  .map((_, index) => (
-                    <td key={index + task.scores.length} className="px-6 py-4">
-                      -
-                    </td>
-                  ))}
-                <td className="px-6 py-4">
-                  {calculateTotalWeight(task.scores).toFixed(2)}
-                </td>
-                <td className="px-6 py-4">
-                  <a
-                    href="#"
-                    className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                  >
-                    Edit
-                  </a>
-                </td>
-              </tr>
-            ))}
+            {allTasks.length > 0 &&
+              Object.entries(calculateAverageWeightPerArticle()).map(
+                ([articleId, averageWeight]) => (
+                  <React.Fragment key={articleId}>
+                    <tr>
+                      <th className="px-6 py-4 sm:w-1/6">
+                        Article Id: {articleId}
+                      </th>
+                      <td className="px-6 py-4 sm:w-1/6" colSpan={5}></td>
+                      <td className="px-6 py-4 sm:w-1/6"></td>
+                      <td className="px-6 py-4 sm:w-1/6">
+                        {averageWeight.toFixed(2)}
+                      </td>
+                    </tr>
+                    {allTasks
+                      .filter((task) => task.articleId === articleId)
+                      .map((task, index) => (
+                        <tr key={task.id}>
+                          <td className="px-6 py-4 sm:w-1/6"></td>
+                          <td className="px-6 py-4 sm:w-1/6">
+                            {task.user.firstName}
+                          </td>
+                          {task.scores.slice(0, 4).map((score, index) => (
+                            <td key={index} className="px-6 py-4 sm:w-1/6">
+                              {score}
+                            </td>
+                          ))}
+                          {Array(4 - task.scores.length)
+                            .fill("")
+                            .map((_, index) => (
+                              <td
+                                key={index + task.scores.length}
+                                className="px-6 py-4 sm:w-1/6"
+                              >
+                                -
+                              </td>
+                            ))}
+                          <td className="px-6 py-4 sm:w-1/6">
+                            {calculateTotalWeight(task.scores).toFixed(2)}
+                          </td>
+                        </tr>
+                      ))}
+                  </React.Fragment>
+                )
+              )}
           </tbody>
         </table>
-        <p>Total Weight: {calculateAverageWeight()}</p>
-      </div> */}
+        {/* {allTasks.length > 0 && (
+          <p>
+            Toplam Ağırlık:{" "}
+            {Object.values(calculateAverageWeightPerArticle())
+              .reduce((a, b) => a + b)
+              .toFixed(2)}
+          </p>
+        )} */}
+      </div>
     </div>
   );
 };

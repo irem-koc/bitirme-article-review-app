@@ -17,7 +17,7 @@ const getAllAllReviews = async () => {
     const response = await api(config);
 
     if (response.data) {
-      return response.data.taskList;
+      return response.data;
     } else {
       throw new Error("Review verileri alınamadı");
     }

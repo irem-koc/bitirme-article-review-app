@@ -1,5 +1,6 @@
 import Label from "@atoms/Label/Label";
 import { Context } from "@context/Context";
+import getAllReviews from "@services/getAllReviews";
 import { useContext, useEffect, useState } from "react";
 import { GrFormNextLink } from "react-icons/gr";
 import { useNavigate } from "react-router-dom";
@@ -8,7 +9,7 @@ type Props = {};
 
 const FirstStep = (props: Props) => {
   const {} = props;
-  const { userr, task, setTask, loggedIn } = useContext(Context);
+  const { userr, task, setTask } = useContext(Context);
   const navigate = useNavigate();
   const [errorText, setErrorText] = useState<string | undefined>();
   const [isDisabled, setIsDisabled] = useState(true);
@@ -20,12 +21,26 @@ const FirstStep = (props: Props) => {
   }, [userr.isUserLoggedIn, navigate]);
 
   useEffect(() => {
-    setIsDisabled(
-      !task.title ||
-        task.title.trim().length === 0 ||
-        !task.articleId ||
-        task.articleId.trim().length === 0
-    );
+    const checkDuplicateArticleId = async () => {
+      try {
+        const userTasks = await getAllReviews(); // Kullanıcıya ait tüm görevleri al
+        const hasDuplicate = userTasks.some(
+          (t) => t.articleId === task.articleId
+        );
+        setIsDisabled(hasDuplicate || !task.title || !task.articleId);
+        setErrorText(
+          hasDuplicate
+            ? "Please enter a different articleId!"
+            : !task.title || !task.articleId
+            ? "Please fill out the form correctly!"
+            : undefined
+        );
+      } catch (error) {
+        console.error("Error fetching user tasks:", error);
+      }
+    };
+
+    checkDuplicateArticleId();
   }, [task.title, task.articleId]);
 
   const handleChange = (e) => {
@@ -36,15 +51,10 @@ const FirstStep = (props: Props) => {
 
   const handleNext = (e) => {
     e.preventDefault();
-    if (
-      task.title &&
-      task.title.trim().length > 0 &&
-      task.articleId &&
-      task.articleId.trim().length > 0
-    ) {
+    if (!isDisabled) {
       navigate("/review/2");
     } else {
-      setErrorText("Title cannot be empty!");
+      setErrorText("Please fill out the form correctly!");
     }
   };
 
@@ -107,7 +117,7 @@ const FirstStep = (props: Props) => {
             }`}
             title={
               isDisabled
-                ? "Please enter a title to proceed"
+                ? "Please enter a different articleId or fill out the form correctly to proceed"
                 : "Continue to next step"
             }
           >

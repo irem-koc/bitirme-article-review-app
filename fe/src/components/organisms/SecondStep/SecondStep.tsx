@@ -126,7 +126,7 @@ const SecondStep = (props: Props) => {
         <button
           type="submit"
           disabled={
-            selectedValues.filter((value) => value !== undefined).length !== 4
+            selectedValues?.filter((value) => value !== undefined).length !== 4
           }
           onClick={handleNext}
           className={`flex items-center rounded-lg p-2 text-white ${
