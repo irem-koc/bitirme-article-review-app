@@ -7,8 +7,6 @@ type Props = {};
 
 const RadioOption = ({ id, name, value, label, checked, onChange }) => (
   <label className="flex items-center space-x-2 cursor-pointer">
-    {" "}
-    {/* Cursor pointer eklendi */}
     <input
       type="radio"
       id={id}
@@ -34,17 +32,21 @@ const SecondStep = (props: Props) => {
     "C. Comprehensibility and presentation of the paper (weight 20%)?*",
     "D. What is the overall impression given by the paper (weight 20%)?*",
   ];
-  const [selectedValues, setSelectedValues] = useState(
+  const [selectedValues, setSelectedValues] = useState<string[]>(
     Array(data.length).fill("")
   );
 
   useEffect(() => {
-    setSelectedValues(task.scores);
-  }, []);
+    if (task && task.scores && task.scores.length === data.length) {
+      setSelectedValues(task.scores);
+    } else {
+      setSelectedValues(Array(data.length).fill(""));
+    }
+  }, [task]);
 
   useEffect(() => {
     const allAnswered =
-      selectedValues?.filter((value) => value !== undefined).length === 4;
+      selectedValues.filter((value) => value !== "").length === data.length;
     setErrorText(allAnswered ? undefined : "All questions must be answered.");
   }, [selectedValues]);
 
@@ -56,7 +58,7 @@ const SecondStep = (props: Props) => {
   };
 
   const handleNext = () => {
-    if (selectedValues?.filter((value) => value !== "").length === 4) {
+    if (selectedValues.filter((value) => value !== "").length === data.length) {
       navigate("/review/3");
     } else {
       setErrorText("All questions must be answered.");
@@ -65,7 +67,6 @@ const SecondStep = (props: Props) => {
 
   return (
     <div className="mt-4 max-w-screen-lg mx-auto p-7">
-      {/* Maksimum genişlik ayarı yapıldı */}
       <table className="border-collapse border w-full">
         <thead>
           <tr>
@@ -79,38 +80,17 @@ const SecondStep = (props: Props) => {
               <td className="border p-2">{question}</td>
               <td className="border p-2">
                 <div className="flex flex-col space-y-2">
-                  <RadioOption
-                    id={`inadequate-${index}`}
-                    name={`evaluation${index}`}
-                    value="1"
-                    label="1"
-                    checked={selectedValues[index] === "1"}
-                    onChange={() => handleRadioChange(index, "1")}
-                  />
-                  <RadioOption
-                    id={`adequate-${index}`}
-                    name={`evaluation${index}`}
-                    value="5"
-                    label="5"
-                    checked={selectedValues[index] === "5"}
-                    onChange={() => handleRadioChange(index, "5")}
-                  />
-                  <RadioOption
-                    id={`good-${index}`}
-                    name={`evaluation${index}`}
-                    value="7"
-                    label="7"
-                    checked={selectedValues[index] === "7"}
-                    onChange={() => handleRadioChange(index, "7")}
-                  />
-                  <RadioOption
-                    id={`excellent-${index}`}
-                    name={`evaluation${index}`}
-                    value="9"
-                    label="9"
-                    checked={selectedValues[index] === "9"}
-                    onChange={() => handleRadioChange(index, "9")}
-                  />
+                  {["1", "5", "7", "9"].map((value) => (
+                    <RadioOption
+                      key={`${index}-${value}`}
+                      id={`${value}-${index}`}
+                      name={`evaluation${index}`}
+                      value={value}
+                      label={value}
+                      checked={selectedValues[index] === value}
+                      onChange={() => handleRadioChange(index, value)}
+                    />
+                  ))}
                 </div>
               </td>
             </tr>
@@ -126,11 +106,13 @@ const SecondStep = (props: Props) => {
         <button
           type="submit"
           disabled={
-            selectedValues?.filter((value) => value !== undefined).length !== 4
+            selectedValues.filter((value) => value !== "").length !==
+            data.length
           }
           onClick={handleNext}
           className={`flex items-center rounded-lg p-2 text-white ${
-            selectedValues?.filter((value) => value !== undefined).length !== 4
+            selectedValues.filter((value) => value !== "").length !==
+            data.length
               ? "bg-gray-400 cursor-not-allowed"
               : "bg-indigo-600 cursor-pointer"
           }`}
