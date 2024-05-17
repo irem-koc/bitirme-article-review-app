@@ -77,6 +77,7 @@ const FourthStep = (props: Props) => {
                   <td className="border p-2">{`${index + 1}. ${text}`}</td>
                   <td className="border p-2">
                     <input
+                      className="cursor-pointer"
                       type="radio"
                       id={`yes-${index}`}
                       value="Yes"
@@ -86,6 +87,7 @@ const FourthStep = (props: Props) => {
                   </td>
                   <td className="border p-2">
                     <input
+                      className="cursor-pointer"
                       type="radio"
                       id={`no-${index}`}
                       value="No"
