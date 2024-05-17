@@ -3,7 +3,7 @@ import Navbar from "@molecules/Navbar/Navbar";
 import verifySession from "@services/verifySession";
 import { useContext, useEffect } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
-
+import "./index.css";
 function App() {
   const { userr } = useContext(Context);
   const navigate = useNavigate();

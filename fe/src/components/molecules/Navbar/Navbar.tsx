@@ -37,7 +37,9 @@ const Navbar = () => {
             <div className="flex flex-1 items-center justify-between sm:items-stretch sm:justify-between">
               <div className="mx-4 flex items-center justify-center">
                 <div className="flex flex-shrink-0 justify-center gap-1 items-center">
-                  <span className="text-yellow-300 unique">ARA</span>
+                  <span className="text-yellow-300 unique text-3xl font-bold">
+                    ARA
+                  </span>
                   <img
                     title="ARA(Article Review App)"
                     className="h-15 w-10"
