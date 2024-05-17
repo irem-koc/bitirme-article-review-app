@@ -20,9 +20,6 @@ const LastStep = (props: Props) => {
       setTask({});
       setTasks([...tasks, task]);
     } catch (err) {
-      console.log("*********");
-      console.log(task);
-
       setErrorText(err);
     } finally {
       // setTask({ title: "", body: "" });

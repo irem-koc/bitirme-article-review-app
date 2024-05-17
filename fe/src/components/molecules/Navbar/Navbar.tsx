@@ -24,7 +24,6 @@ const Navbar = () => {
     localStorage.setItem("jwt", "");
     localStorage.setItem("userdata", "");
     setUserr({ ...userr, isUserLoggedIn: false });
-    console.log("Logout function called");
     // navigate("./logout");
   };
   useEffect(() => {

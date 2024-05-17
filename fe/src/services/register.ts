@@ -12,8 +12,6 @@ const register = async ({ user, role }) => {
         role: role,
       }
     );
-    console.log("Register response:", response.data);
-
     return response.data?.token;
   } catch (error) {
     console.error("Error registering user:", error);

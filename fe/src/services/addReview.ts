@@ -22,8 +22,6 @@ const addReview = async (reviewData: any) => {
       }
     );
 
-    console.log("Add review response: ", response.data);
-
     return response.data;
   } catch (error) {
     console.error("Error adding review:", error);

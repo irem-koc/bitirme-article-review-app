@@ -10,8 +10,6 @@ const login = async (user) => {
         requestId: uuidv4(),
       }
     );
-    console.log("Login response:", response.data);
-
     return response.data?.token;
   } catch (error) {
     console.error("Error loging in user:", error);

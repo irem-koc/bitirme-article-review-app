@@ -10,8 +10,6 @@ function App() {
   useEffect(() => {
     if (localStorage.getItem("jwt") && !userr.isUserLoggedIn) {
       verifySession().then((res) => {
-        console.log(res.status);
-
         if (res.status === "SUCCESS") {
           navigate("/");
         } else {
