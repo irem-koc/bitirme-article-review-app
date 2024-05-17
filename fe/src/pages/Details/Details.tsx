@@ -126,9 +126,7 @@ const Details = (props: Props) => {
                           className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800"
                           key={task.id}
                         >
-                          <td className="px-3 py-3 sm:w-1/6">
-                            Id: {articleId}
-                          </td>
+                          <td className="px-3 py-3 sm:w-1/6"></td>
                           <td className="px-3 py-3 sm:w-1/6">
                             {task.user.firstName}
                           </td>
@@ -154,12 +152,12 @@ const Details = (props: Props) => {
                         </tr>
                       ))}
                     <tr className="border-t odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800">
-                      <th className="px-3 py-3 sm:w-1/6">
+                      <th className="px-3 py-3 sm:w-1/6 italic">
                         Article Id: {articleId}
                       </th>
                       <td className="px-3 py-3 sm:w-1/6" colSpan={5}></td>
                       <td className="px-3 py-3 sm:w-1/6"></td>
-                      <td className="px-3 py-3 sm:w-1/6">
+                      <td className="px-3 py-3 sm:w-1/6 italic font-bold">
                         {averageWeight.toFixed(2)}
                       </td>
                     </tr>
