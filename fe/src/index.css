@@ -2,10 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 @layer base {
-    .unique {
-        font-family: "Dancing Script", cursive;
-        font-optical-sizing: auto;
-        font-weight: 700;
-        font-style: normal;
-    }
+  .unique {
+    font-family: "Dancing Script", cursive;
+    font-optical-sizing: auto;
+    font-weight: 700;
+    font-style: normal;
   }
+}
