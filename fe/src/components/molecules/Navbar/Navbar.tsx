@@ -47,47 +47,49 @@ const Navbar = () => {
                     alt="Your Company"
                   />
                 </div>
-                <div className="sm:ml-6 hidden md:flex">
-                  <div className="space-x-4 flex items-center justify-center">
-                    <Link
-                      to="/"
-                      className={`${
-                        location.pathname !== "/details" &&
-                        location.pathname !== "/login" &&
-                        location.pathname !== "/signup"
-                          ? "bg-transparent text-white border border-white"
-                          : "text-gray-300"
-                      } 
-                  sm:hover:bg-indigo-900 flex items-center sm:hover:text-white rounded-md px-3 py-2 text-sm font-medium sm:active:bg-black sm:active:text-white ${
+                {localStorage.getItem("userdata") && (
+                  <div className="sm:ml-6 hidden md:flex">
+                    <div className="space-x-4 flex items-center justify-center">
+                      <Link
+                        to="/"
+                        className={`${
+                          location.pathname !== "/details" &&
+                          location.pathname !== "/login" &&
+                          location.pathname !== "/signup"
+                            ? "bg-transparent text-white border border-white"
+                            : "text-gray-300"
+                        } 
+                  sm:hover:bg-indigo-900 flex items-center sm:hover:text-white rounded-md px-3 py-2 text-md font-medium sm:active:bg-black sm:active:text-white ${
                     window.innerWidth <= 640 ? "hidden" : "block"
                   }`}
-                      aria-current="page"
-                    >
-                      <span className="pr-2">
-                        <HiOutlineHome />
-                      </span>
-                      Home
-                    </Link>
-                    <Link
-                      to="/details"
-                      className={`
+                        aria-current="page"
+                      >
+                        <span className="pr-2">
+                          <HiOutlineHome />
+                        </span>
+                        Home
+                      </Link>
+                      <Link
+                        to="/details"
+                        className={`
                 ${
                   location.pathname === "/details"
                     ? "bg-transparent text-white  border border-white"
                     : "text-gray-300"
                 } 
-                  sm:hover:bg-indigo-900 flex items-center sm:hover:text-white rounded-md px-3 py-2 text-sm font-medium sm:active:bg-black sm:active:text-white ${
+                  sm:hover:bg-indigo-900 flex items-center sm:hover:text-white rounded-md px-3 py-2 text-md font-medium sm:active:bg-black sm:active:text-white ${
                     window.innerWidth <= 640 ? "hidden" : "block"
                   }`}
-                      aria-current="page"
-                    >
-                      <span className="pr-2">
-                        <TbListDetails />
-                      </span>
-                      Details
-                    </Link>
+                        aria-current="page"
+                      >
+                        <span className="pr-2">
+                          <TbListDetails />
+                        </span>
+                        Details
+                      </Link>
+                    </div>
                   </div>
-                </div>
+                )}
               </div>
               <div className="mx-4 flex items-center justify-center">
                 {userr.userData.firstName &&
@@ -97,7 +99,7 @@ const Navbar = () => {
                       <span>
                         <CiUser fill="white" stroke="1.2" />
                       </span>
-                      <p className="text-white">
+                      <p className="text-white text-md">
                         Hello, {userr.userData?.firstName}
                       </p>
                     </div>
@@ -110,7 +112,7 @@ const Navbar = () => {
                           ? "bg-transparent hidden md:flex text-white border border-white"
                           : "text-gray-300"
                       } 
-                  sm:hover:bg-indigo-900 flex items-center sm:hover:text-white rounded-md px-3 py-2 text-sm font-medium sm:active:bg-black sm:active:text-white ${
+                  sm:hover:bg-indigo-900 flex items-center sm:hover:text-white rounded-md px-3 py-2 text-md font-medium sm:active:bg-black sm:active:text-white ${
                     window.innerWidth <= 640 ? "hidden" : "block"
                   }`}
                       aria-current="page"
