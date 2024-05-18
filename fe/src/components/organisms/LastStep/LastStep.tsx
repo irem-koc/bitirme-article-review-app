@@ -2,9 +2,8 @@ import Label from "@atoms/Label/Label";
 import { Context } from "@context/Context";
 import addReview from "@services/addReview";
 import { useContext, useState } from "react";
-import { GrFormNextLink } from "react-icons/gr";
+import { BsSend } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
-
 type Props = {};
 
 const LastStep = (props: Props) => {
@@ -65,9 +64,9 @@ const LastStep = (props: Props) => {
             }
           }}
         >
-          Next
+          Submit
           <span className="pl-1">
-            <GrFormNextLink />
+            <BsSend />
           </span>
         </button>
       </div>
