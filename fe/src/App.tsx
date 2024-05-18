@@ -11,9 +11,9 @@ function App() {
     if (localStorage.getItem("jwt") && !userr.isUserLoggedIn) {
       verifySession().then((res) => {
         if (res.status === "SUCCESS") {
-          navigate("/");
+          // navigate("/");
         } else {
-          navigate("/login");
+          //navigate("/login");
           localStorage.setItem("jwt", "");
           localStorage.setItem("userdata", "");
         }
