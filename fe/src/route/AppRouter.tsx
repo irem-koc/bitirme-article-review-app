@@ -8,6 +8,7 @@ import ThirdStep from "@organisms/ThirdStep/ThirdStep";
 import Details from "@pages/Details/Details";
 import Login from "@pages/Login/Login";
 import Logout from "@pages/Logout/Logout";
+import NotFound from "@pages/NotFound/NotFound";
 import Signup from "@pages/Signup/Signup";
 import Success from "@pages/Success/Success";
 import Welcome from "@pages/Welcome/Welcome";
@@ -46,6 +47,7 @@ const router = createBrowserRouter([
           },
         ],
       },
+
       {
         path: "/details",
         element: <Details />,
@@ -66,9 +68,14 @@ const router = createBrowserRouter([
         path: "/login",
         element: <Login />,
       },
+
       {
         path: "/signup",
         element: <Signup />,
+      },
+      {
+        path: "/*",
+        element: <NotFound />,
       },
     ],
   },
