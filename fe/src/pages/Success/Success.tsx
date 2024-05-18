@@ -30,7 +30,9 @@ const Success = (props: Props) => {
           className="mb-4"
         />
         <h1 className="text-2xl font-bold text-indigo-600">Congratulations!</h1>
-        <p className="text-lg">Your review has been submitted successfully.</p>
+        <p className="text-lg">
+          Your review has been submitted successfully 💫
+        </p>
       </div>
     </motion.div>
   );

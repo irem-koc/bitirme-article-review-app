@@ -1,12 +1,13 @@
+import { Context } from "@context/Context";
 import { motion } from "framer-motion";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 type Props = {};
 
 const Logout = (props: Props) => {
   const navigate = useNavigate();
-
+  const { userr } = useContext(Context);
   useEffect(() => {
     const timer = setTimeout(() => {
       navigate("/login");
@@ -29,8 +30,10 @@ const Logout = (props: Props) => {
           alt="Bye Gif"
           className="mb-4"
         />
-        <h1 className="text-2xl font-bold text-indigo-600">Congratulations!</h1>
-        <p className="text-lg">Your review has been submitted successfully.</p>
+        <h1 className="text-2xl font-bold text-indigo-600">
+          See you again {userr.userData.firstName}!
+        </h1>
+        <p className="text-lg">Until next time, take care 👋</p>
       </div>
     </motion.div>
   );
