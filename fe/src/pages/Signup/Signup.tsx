@@ -18,11 +18,36 @@ const Signup = () => {
   });
 
   const [errorText, setErrorText] = useState<string | undefined>();
+  const [emailError, setEmailError] = useState<string | undefined>("");
+  const [passwordError, setPasswordError] = useState<string | undefined>("");
   const [isKvkkChecked, setIsKvkkChecked] = useState<boolean>(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setUser({ ...user, [name]: value });
+
+    if (name === "email") {
+      // Simple email validation
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailPattern.test(value)) {
+        setEmailError("Geçerli bir e-posta adresi girin.");
+      } else {
+        setEmailError("");
+      }
+    }
+
+    if (name === "password") {
+      // Password validation
+      const passwordPattern =
+        /^(?:(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^\da-zA-Z]).*)$/;
+      if (!passwordPattern.test(value)) {
+        setPasswordError(
+          "Şifreniz en az bir büyük harf, bir küçük harf, bir rakam ve bir özel karakter içermelidir."
+        );
+      } else {
+        setPasswordError("");
+      }
+    }
   };
 
   const handleRegister = async () => {
@@ -34,25 +59,6 @@ const Signup = () => {
 
       const role = "VISITOR";
       const res = await register({ user, role });
-      localStorage.setItem("jwt", res);
-
-      setUserr({
-        isUserLoggedIn: true,
-        userData: {
-          firstName: user.firstName,
-          lastName: user.lastName,
-          email: user.email,
-        },
-      });
-
-      localStorage.setItem(
-        "userdata",
-        JSON.stringify({
-          firstName: user.firstName,
-          lastName: user.lastName,
-          email: user.email,
-        })
-      );
 
       if (res.error) {
         if (res.error.status === 400) {
@@ -61,12 +67,42 @@ const Signup = () => {
           setErrorText("Kullanıcı hatası");
         }
       } else {
+        localStorage.setItem("jwt", res);
+
+        setUserr({
+          isUserLoggedIn: true,
+          userData: {
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.email,
+          },
+        });
+
+        localStorage.setItem(
+          "userdata",
+          JSON.stringify({
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.email,
+          })
+        );
+
         navigate("/welcome");
       }
     } catch (error) {
       setErrorText(error.message);
     }
   };
+  console.log(user.password);
+
+  const isFormInvalid =
+    !user.firstName ||
+    !user.lastName ||
+    !user.email ||
+    !user.password ||
+    !isKvkkChecked ||
+    emailError ||
+    passwordError;
 
   return (
     <div className="flex flex-col justify-start items-center w-full max-w-md mx-auto mt-4 px-4 sm:px-6 lg:px-8">
@@ -85,7 +121,7 @@ const Signup = () => {
             locate.pathname !== "/signup"
               ? "border"
               : "text-black bg-gray-100 border-b"
-          } flex justify-center items-center w-full rounded-xs px-3 py-2 text-sm font-medium block`}
+          } flex justify-center items-center w-full rounded-xs px-3 py-2 text-lg font-medium block`}
           aria-current="page"
         >
           Giriş Yap
@@ -96,7 +132,7 @@ const Signup = () => {
             locate.pathname !== "/login"
               ? "border border-b-0"
               : "text-gray-300 border-b"
-          } flex text-indigo-600 justify-center items-center w-full rounded-xs px-3 py-2 text-sm font-medium block`}
+          } flex text-indigo-600 justify-center items-center w-full rounded-xs px-3 py-2 text-lg font-medium block`}
           aria-current="page"
         >
           Üye Ol
@@ -111,7 +147,7 @@ const Signup = () => {
           <Label
             content={"Ad"}
             htmlFor={"firstName"}
-            style={["text-xs font-medium leading-6 text-gray-900"]}
+            style={["text-sm font-medium leading-6 text-gray-900"]}
           />
           <input
             onChange={handleChange}
@@ -119,14 +155,14 @@ const Signup = () => {
             type={"text"}
             id={"firstName"}
             name="firstName"
-            className="border w-full rounded-sm flex-shrink-0 bg-transparent p-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+            className="border mt-2 focus:ring-indigo-500 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-md w-full flex-shrink-0 bg-transparent p-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
           />
         </div>
         <div className="mb-4">
           <Label
             content={"Soyad"}
             htmlFor={"lastName"}
-            style={["text-xs font-medium leading-6 text-gray-900"]}
+            style={["text-sm font-medium leading-6 text-gray-900"]}
           />
           <input
             onChange={handleChange}
@@ -134,14 +170,14 @@ const Signup = () => {
             type={"text"}
             id={"lastName"}
             name="lastName"
-            className="border w-full rounded-sm flex-shrink-0 bg-transparent p-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+            className="border mt-2 focus:ring-indigo-500 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-md w-full flex-shrink-0 bg-transparent p-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
           />
         </div>
         <div className="mb-4">
           <Label
             content={"E-Posta"}
             htmlFor={"email"}
-            style={["text-xs font-medium leading-6 text-gray-900"]}
+            style={["text-sm font-medium leading-6 text-gray-900"]}
           />
           <input
             onChange={handleChange}
@@ -149,14 +185,17 @@ const Signup = () => {
             type={"email"}
             id={"email"}
             name="email"
-            className="border w-full rounded-sm flex-shrink-0 bg-transparent p-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+            className={`border mt-2 focus:ring-indigo-500 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-md w-full flex-shrink-0 bg-transparent p-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 ${
+              emailError ? "border-red-500" : ""
+            }`}
           />
+          {emailError && <p className="text-red-500 error">{emailError}</p>}
         </div>
         <div className="mb-4">
           <Label
             content={"Şifre"}
             htmlFor={"password"}
-            style={["text-xs font-medium leading-6 text-gray-900"]}
+            style={["text-sm font-medium leading-6 text-gray-900"]}
           />
           <input
             onChange={handleChange}
@@ -164,12 +203,13 @@ const Signup = () => {
             type={"password"}
             id={"password"}
             name="password"
-            className="border w-full rounded-sm bg-transparent p-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 flex-shrink-0"
+            className={`border mt-2 focus:ring-indigo-500 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-md w-full bg-transparent p-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 flex-shrink-0 ${
+              passwordError ? "border-red-500" : ""
+            }`}
           />
-          {/* <p className="text-sm text-gray-600 mb-2">
-            Şifreniz en az 10 karakter olmalı. 1 büyük harf, 1 küçük harf ve
-            rakam içermelidir.
-          </p> */}
+          {passwordError && (
+            <p className="text-red-500 error">{passwordError}</p>
+          )}
         </div>
         <div className="flex items-center gap-4 my-4">
           <input
@@ -179,29 +219,19 @@ const Signup = () => {
             onChange={() => setIsKvkkChecked(!isKvkkChecked)}
             className="w-4 h-4 border-gray-900"
           />
-          <div className="text-xs text-gray-900">
+          <div className="text-sm text-gray-900">
             Kişisel verilerimin işlenmesine yönelik aydınlatma metnini okudum ve
             anladım
           </div>
         </div>
-        {errorText && <p className="text-red-500 text-xs">{errorText}</p>}
+        {errorText && <p className="text-red-500 error">{errorText}</p>}
         <div>
           <button
             type="submit"
-            disabled={
-              !user.firstName ||
-              !user.lastName ||
-              !user.email ||
-              !user.password ||
-              !isKvkkChecked
-            }
+            disabled={isFormInvalid}
             onClick={handleRegister}
             className={`w-full rounded-md text-white text-[14px] font-semibold text-center py-2 px-3 ${
-              !user.firstName ||
-              !user.lastName ||
-              !user.email ||
-              !user.password ||
-              !isKvkkChecked
+              isFormInvalid
                 ? "bg-gray-400 cursor-not-allowed"
                 : "bg-indigo-600 hover:bg-indigo-700"
             }`}
