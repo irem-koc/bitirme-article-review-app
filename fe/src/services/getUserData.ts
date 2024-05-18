@@ -20,7 +20,6 @@ const getUserData = async () => {
     const response = await api(config);
 
     if (response.data) {
-      // TODO: localStorage.setItem("userdata", response.data);
       return response.data;
     } else {
       throw new Error("Kullanıcı verileri alınamadı");
