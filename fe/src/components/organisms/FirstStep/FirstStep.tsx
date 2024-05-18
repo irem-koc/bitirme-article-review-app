@@ -13,12 +13,15 @@ const FirstStep = (props: Props) => {
   const navigate = useNavigate();
   const [errorText, setErrorText] = useState<string | undefined>();
   const [isDisabled, setIsDisabled] = useState(true);
+  console.log(userr, " userr");
 
   useEffect(() => {
-    if (!userr.isUserLoggedIn) {
+    if (!localStorage.getItem("userdata") && !localStorage.getItem("userr")) {
+      console.log("burası");
       navigate("/login");
+      console.log();
     }
-  }, [userr.isUserLoggedIn, navigate]);
+  }, [localStorage.getItem("userdata"), navigate]);
 
   useEffect(() => {
     const checkDuplicateArticleId = async () => {
