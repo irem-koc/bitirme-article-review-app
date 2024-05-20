@@ -16,6 +16,7 @@ public class GetAllUserDataResponse implements Serializable {
     private String firstName;
     private String lastName;
     private String email;
+    private String rol;
     private String status;
     private Date datetime;
     private String requestId;

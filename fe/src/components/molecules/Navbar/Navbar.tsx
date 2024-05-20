@@ -5,12 +5,12 @@ import { CiLogin, CiLogout, CiUser } from "react-icons/ci";
 import { HiOutlineHome } from "react-icons/hi";
 import { TbListDetails } from "react-icons/tb";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+
 const Navbar = () => {
-  // const { data: userData } = useGetUserDataQuery();
   const location = useLocation();
   const navigate = useNavigate();
   const { userr, setUserr } = useContext(Context);
-  const [errorText, setErrorText] = useState();
+  const [errorText, setErrorText] = useState<string>();
 
   const handleLogin = async () => {
     try {
@@ -20,15 +20,17 @@ const Navbar = () => {
       setErrorText(error.message);
     }
   };
+
   const handleLogout = () => {
     localStorage.setItem("jwt", "");
     localStorage.setItem("userdata", "");
     setUserr({ ...userr, isUserLoggedIn: false });
-    // navigate("./logout");
   };
+
   useEffect(() => {
     handleLogin();
   }, [location.pathname]);
+
   return (
     <div>
       <nav className="bg-gradient-to-r from-indigo-600 to-gray-800">
@@ -50,25 +52,27 @@ const Navbar = () => {
                 {localStorage.getItem("userdata") && (
                   <div className="sm:ml-6 hidden md:flex">
                     <div className="space-x-4 flex items-center justify-center">
-                      <Link
-                        to="/"
-                        className={`${
-                          location.pathname !== "/details" &&
-                          location.pathname !== "/login" &&
-                          location.pathname !== "/signup"
-                            ? "bg-transparent text-white border border-white"
-                            : "text-gray-300"
-                        } 
+                      {userr.userData.rol !== "admin" && (
+                        <Link
+                          to="/"
+                          className={`${
+                            location.pathname !== "/details" &&
+                            location.pathname !== "/login" &&
+                            location.pathname !== "/signup"
+                              ? "bg-transparent text-white border border-white"
+                              : "text-gray-300"
+                          } 
                   sm:hover:bg-indigo-900 flex items-center sm:hover:text-white rounded-md px-3 py-2 text-md font-medium sm:active:bg-black sm:active:text-white ${
                     window.innerWidth <= 640 ? "hidden" : "block"
                   }`}
-                        aria-current="page"
-                      >
-                        <span className="pr-2">
-                          <HiOutlineHome />
-                        </span>
-                        Home
-                      </Link>
+                          aria-current="page"
+                        >
+                          <span className="pr-2">
+                            <HiOutlineHome />
+                          </span>
+                          Home
+                        </Link>
+                      )}
                       <Link
                         to="/details"
                         className={`

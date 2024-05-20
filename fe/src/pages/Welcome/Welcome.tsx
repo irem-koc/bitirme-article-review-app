@@ -8,13 +8,18 @@ type Props = {};
 const Welcome = (props: Props) => {
   const navigate = useNavigate();
   const { userr } = useContext(Context);
+
   useEffect(() => {
     const timer = setTimeout(() => {
-      navigate("/");
+      if (userr.userData.rol === "admin") {
+        navigate("/details");
+      } else {
+        navigate("/");
+      }
     }, 3000);
 
     return () => clearTimeout(timer);
-  }, [navigate]);
+  }, [navigate, userr]);
 
   return (
     <motion.div

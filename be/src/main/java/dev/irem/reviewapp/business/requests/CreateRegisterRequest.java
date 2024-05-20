@@ -34,6 +34,9 @@ public class CreateRegisterRequest {
     @NotEmpty(message = "password : must not be empty")
     @NotBlank(message = "password : must not be blank")
     private String password;
-
+    @NotNull(message = "rol : must not be null")
+    @NotEmpty(message = "rol : must not be empty")
+    @NotBlank(message = "rol : must not be blank")
+    private String rol;
     private Role role;
 }

@@ -8,8 +8,8 @@
 		<version>3.2.0</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>dev.tugba</groupId>
-	<artifactId>task-app</artifactId>
+	<groupId>dev.irem</groupId>
+	<artifactId>review-app</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>task-app</name>
 	<description>Create task app</description>

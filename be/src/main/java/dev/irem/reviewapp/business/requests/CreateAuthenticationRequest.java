@@ -24,9 +24,9 @@ public class CreateAuthenticationRequest {
     // return accountcode.matches("^\\d*\\.?\\d+$") || isValidEmail(accountcode);
     // }
 
-    private boolean isValidEmail(String email) {
-        return email.matches("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,6}$");
-    }
+    // private boolean isValidEmail(String email) {
+    // return email.matches("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,6}$");
+    // }
 
     @NotNull(message = "password : must not be null")
     @NotEmpty(message = "password : must not be empty")

@@ -4,6 +4,7 @@ import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 type Props = {};
+//reviewer veya admin olarak tanımla
 
 const Logout = (props: Props) => {
   const navigate = useNavigate();

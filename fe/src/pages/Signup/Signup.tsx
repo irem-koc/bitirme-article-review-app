@@ -15,6 +15,7 @@ const Signup = () => {
     lastName: "",
     email: "",
     password: "",
+    rol: "",
   });
 
   const [errorText, setErrorText] = useState<string | undefined>();
@@ -50,13 +51,16 @@ const Signup = () => {
     }
   };
 
+  const handleRoleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setUser({ ...user, rol: e.target.value });
+  };
+
   const handleRegister = async () => {
     try {
       if (!isKvkkChecked) {
         setErrorText("KVKK onayı vermelisiniz.");
         return;
       }
-
       const role = "VISITOR";
       const res = await register({ user, role });
 
@@ -75,6 +79,7 @@ const Signup = () => {
             firstName: user.firstName,
             lastName: user.lastName,
             email: user.email,
+            rol: user.rol,
           },
         });
 
@@ -84,6 +89,7 @@ const Signup = () => {
             firstName: user.firstName,
             lastName: user.lastName,
             email: user.email,
+            rol: user.rol,
           })
         );
 
@@ -101,6 +107,7 @@ const Signup = () => {
     !user.email ||
     !user.password ||
     !isKvkkChecked ||
+    !user.rol ||
     emailError ||
     passwordError;
 
@@ -210,6 +217,37 @@ const Signup = () => {
           {passwordError && (
             <p className="text-red-500 error">{passwordError}</p>
           )}
+        </div>
+        <div className="mb-4">
+          <Label
+            content={"Rol Seçimi"}
+            htmlFor={"rol"}
+            style={["text-sm font-medium leading-6 text-gray-900"]}
+          />
+          <div className="flex flex-col">
+            <label className="flex items-center">
+              <input
+                type="radio"
+                name="rol"
+                value="admin"
+                onChange={handleRoleChange}
+                checked={user.rol === "admin"}
+                className="w-4 h-4 border-gray-900"
+              />
+              <span className="ml-2 text-sm text-gray-900">Admin</span>
+            </label>
+            <label className="flex items-center">
+              <input
+                type="radio"
+                name="rol"
+                value="reviewer"
+                onChange={handleRoleChange}
+                checked={user.rol === "reviewer"}
+                className="w-4 h-4 border-gray-900"
+              />
+              <span className="ml-2 text-sm text-gray-900">Reviewer</span>
+            </label>
+          </div>
         </div>
         <div className="flex items-center gap-4 my-4">
           <input

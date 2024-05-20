@@ -10,7 +10,7 @@ const Success = (props: Props) => {
   useEffect(() => {
     const timer = setTimeout(() => {
       navigate("/details");
-    }, 3000);
+    }, 300000);
 
     return () => clearTimeout(timer);
   }, [navigate]);
@@ -27,7 +27,7 @@ const Success = (props: Props) => {
           typeof="gif"
           src="https://media.tenor.com/oOKAO1IJ5X8AAAAi/thanks-thanks-gifs.gif"
           alt="Thanks Gif"
-          className="mb-4"
+          className="mx-auto"
         />
         <h1 className="text-2xl font-bold text-indigo-600">Congratulations!</h1>
         <p className="text-lg">

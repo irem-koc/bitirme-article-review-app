@@ -1,7 +1,10 @@
 import api from "../types/api";
 
-const register = async ({ user, role }) => {
+const register = async ({user, role}) => {
   try {
+    console.log('====================================');
+    console.log(user);
+    console.log('====================================');
     const response = await api.post(
       "http://localhost:8080/api/v1/auth/register",
       {
@@ -9,6 +12,7 @@ const register = async ({ user, role }) => {
         lastName: user.lastName,
         email: user.email,
         password: user.password,
+        rol: user.rol,
         role: role,
       }
     );

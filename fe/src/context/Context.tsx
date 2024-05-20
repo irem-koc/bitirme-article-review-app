@@ -6,6 +6,7 @@ type UserType = {
     firstName: string | null;
     lastName: string | null;
     email: string | null;
+    rol: string | null;
   };
 };
 
@@ -29,7 +30,7 @@ type ContextType = {
 export const Context = createContext<ContextType>({
   userr: {
     isUserLoggedIn: false,
-    userData: { firstName: null, lastName: null, email: null },
+    userData: { firstName: null, lastName: null, email: null, rol: null },
   },
   setUserr: () => {},
   task: {
@@ -51,7 +52,7 @@ type Props = {
 const ContextProvider = ({ children }: Props) => {
   const [userr, setUserr] = useState<UserType>({
     isUserLoggedIn: false,
-    userData: { firstName: null, lastName: null, email: null },
+    userData: { firstName: null, lastName: null, email: null, rol: null },
   });
 
   const [task, setTask] = useState<TaskType>({
@@ -70,15 +71,15 @@ const ContextProvider = ({ children }: Props) => {
     const userDataStr = localStorage.getItem("userdata");
     if (userDataStr) {
       const userDataObj = JSON.parse(userDataStr);
-      const { firstName, lastName, email } = userDataObj;
+      const { firstName, lastName, email, rol } = userDataObj;
       setUserr({
         isUserLoggedIn: loggedIn,
-        userData: { firstName, lastName, email },
+        userData: { firstName, lastName, email, rol },
       });
     } else {
       setUserr({
         isUserLoggedIn: loggedIn,
-        userData: { firstName: null, lastName: null, email: null },
+        userData: { firstName: null, lastName: null, email: null, rol: null },
       });
     }
   }, []);

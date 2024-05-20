@@ -47,6 +47,7 @@ public class AuthenticateManager implements AuthenticationService {
                 .lastName(createRegisterRequest.getLastName())
                 .email(createRegisterRequest.getEmail())
                 .password(this.passwordEncoder.encode(createRegisterRequest.getPassword()))
+                .rol(createRegisterRequest.getRol())
                 .role(createRegisterRequest.getRole().toString() == "ADMIN" ? Role.ADMIN : Role.VISITOR)
                 .build();
 

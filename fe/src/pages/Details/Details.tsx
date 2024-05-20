@@ -20,15 +20,11 @@ const Details = () => {
       setIsloading(true);
       const res = await getAllAllReviews();
 
-      const userArticleIds = [...res]
-        .filter((task) => task.user.email === email)
-        .map((task) => task.articleId);
-      console.log("userArticleIds", userArticleIds);
-      const uniqueUserArticleIds = Array.from(new Set(userArticleIds));
-      const userTasks = res.filter((task) =>
-        uniqueUserArticleIds.includes(task.articleId)
-      );
-      console.log("userTasks", userTasks);
+      let userTasks = res;
+      if (userr.userData.rol === "reviewer") {
+        userTasks = res.filter((task) => task.user.email === email);
+      }
+
       setAllTasks(userTasks);
       setFilteredTasks(userTasks);
     } catch (error) {
@@ -43,11 +39,12 @@ const Details = () => {
     if (userr.userData.email) handleLogin(userr.userData.email);
   }, [userr.userData.email]);
 
-  const calculateTotalWeight = (scores) => {
+  const calculateTotalWeight = (scores: number[]) => {
     const weights = [0.35, 0.25, 0.2, 0.2];
-    return scores.reduce((total, score, index) => {
-      return total + score * weights[index];
-    }, 0);
+    return scores.reduce(
+      (total, score, index) => total + score * weights[index],
+      0
+    );
   };
 
   const calculateAverageWeightPerArticle = () => {
@@ -64,7 +61,7 @@ const Details = () => {
       }
       for (const articleId in articleWeights) {
         articleWeights[articleId] =
-          articleWeights[articleId].reduce((a, b) => a + b) /
+          articleWeights[articleId].reduce((a, b) => a + b, 0) /
           articleWeights[articleId].length;
       }
       return articleWeights;
@@ -80,7 +77,6 @@ const Details = () => {
     );
     setFilteredTasks(filtered);
   };
-  console.log(filteredTasks, " filteredTasks", allTasks, " allTasks");
 
   return (
     <div className="p-7">
@@ -147,7 +143,9 @@ const Details = () => {
                               }`}
                               key={task.id}
                             >
-                              <td className="px-3 py-3 sm:w-1/6 border"></td>
+                              <td className="px-3 py-3 sm:w-1/6 border">
+                                {task.articleId}
+                              </td>
                               <td className="px-3 py-3 sm:w-1/6 border">
                                 {task.user.firstName}
                               </td>
@@ -195,7 +193,6 @@ const Details = () => {
               </table>
             ) : (
               <Nothing />
-              // <div>a</div>
             )}
           </div>
         </>
