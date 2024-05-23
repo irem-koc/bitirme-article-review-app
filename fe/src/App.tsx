@@ -13,8 +13,7 @@ function App() {
         if (res.status === "SUCCESS") {
           // navigate("/");
         } else {
-          navigate("/login");
-          localStorage.getItem("userdata");
+          //navigate("/login");
           localStorage.setItem("jwt", "");
           localStorage.setItem("userdata", "");
         }

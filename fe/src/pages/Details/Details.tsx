@@ -192,7 +192,7 @@ const Details = () => {
                 </tbody>
               </table>
             ) : (
-              filteredTasks.length === 0 && <Nothing />
+              <Nothing />
             )}
           </div>
         </>

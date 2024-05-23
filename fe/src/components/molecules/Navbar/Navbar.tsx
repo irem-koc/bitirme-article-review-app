@@ -4,11 +4,11 @@ import { useContext, useEffect, useState } from "react";
 import { CiLogin, CiLogout, CiUser } from "react-icons/ci";
 import { HiOutlineHome } from "react-icons/hi";
 import { TbListDetails } from "react-icons/tb";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const location = useLocation();
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const { userr, setUserr } = useContext(Context);
   const [errorText, setErrorText] = useState<string>();
 
