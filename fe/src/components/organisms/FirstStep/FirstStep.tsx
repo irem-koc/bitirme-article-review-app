@@ -16,7 +16,7 @@ const FirstStep = (props: Props) => {
   console.log(userr, " userr");
 
   useEffect(() => {
-    if (!localStorage.getItem("userdata") || !userr.userData.email) {
+    if (!localStorage.getItem("userdata") && !userr.userData.email) {
       console.log("burası");
       navigate("/login");
       console.log();

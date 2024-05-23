@@ -1,19 +1,28 @@
+import { Context } from "@context/Context";
 import { motion } from "framer-motion";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 type Props = {};
 
-const Nothing = (props: Props) => {
+const NotFound = (props: Props) => {
   const navigate = useNavigate();
-  //   const { userr } = useContext(Context);
+  const { userr } = useContext(Context);
+
   useEffect(() => {
     const timer = setTimeout(() => {
-      localStorage.getItem("userdata") ? navigate("/") : navigate("/login");
+      const userData = JSON.parse(localStorage.getItem("userdata"));
+      if (userData && userr.userData?.rol === "admin") {
+        navigate("/details");
+      } else if (userData) {
+        navigate("/");
+      } else {
+        navigate("/login");
+      }
     }, 5000);
 
     return () => clearTimeout(timer);
-  }, [navigate]);
+  }, [navigate, userr]);
 
   return (
     <motion.div
@@ -29,11 +38,11 @@ const Nothing = (props: Props) => {
           className="mb-4 mx-auto"
           style={{ maxWidth: "100%", height: "auto", maxHeight: "400px" }}
         />
-        <h1 className="text-2xl font-bold text-indigo-600">Anything found</h1>
-        <p className="text-lg">You're turning back... </p>
+        <h1 className="text-2xl font-bold text-indigo-600">Nothing found</h1>
+        <p className="text-lg">Redirecting you shortly...</p>
       </div>
     </motion.div>
   );
 };
 
-export default Nothing;
+export default NotFound;
