@@ -22,6 +22,8 @@ const getUserData = async () => {
     if (response.data) {
       return response.data;
     } else {
+      localStorage.setItem("jwt", "");
+      localStorage.setItem("userdata", "");
       throw new Error("Kullanıcı verileri alınamadı");
     }
   } catch (error) {

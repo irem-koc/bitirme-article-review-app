@@ -16,12 +16,12 @@ const FirstStep = (props: Props) => {
   console.log(userr, " userr");
 
   useEffect(() => {
-    if (!localStorage.getItem("userdata") && !localStorage.getItem("userr")) {
+    if (!localStorage.getItem("userdata") || !userr.userData.email) {
       console.log("burası");
       navigate("/login");
       console.log();
     }
-  }, [localStorage.getItem("userdata"), navigate]);
+  }, [userr, navigate]);
 
   useEffect(() => {
     const checkDuplicateArticleId = async () => {

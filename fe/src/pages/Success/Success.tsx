@@ -10,7 +10,7 @@ const Success = (props: Props) => {
   useEffect(() => {
     const timer = setTimeout(() => {
       navigate("/details");
-    }, 300000);
+    }, 3000);
 
     return () => clearTimeout(timer);
   }, [navigate]);

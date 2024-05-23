@@ -224,7 +224,7 @@ const Signup = () => {
             htmlFor={"rol"}
             style={["text-sm font-medium leading-6 text-gray-900"]}
           />
-          <div className="flex flex-col">
+          <div className="flex gap-5 mt-2">
             <label className="flex items-center">
               <input
                 type="radio"
